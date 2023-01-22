@@ -1,4 +1,5 @@
 deployment:
+[ ] mention creator
 [ ] mute command: time period in message
 [ ] help command
 [ ] logs
