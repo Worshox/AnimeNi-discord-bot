@@ -27,7 +27,7 @@ module.exports = {
         const time = Number(interaction.options.getString('czas'));
         const reason = interaction.options.getString('powód') || 'Nie podano przyczyny';
 
-        await interaction.reply(`**Wyciszono** użytkownika ${member.username} z powodu: ${reason}, na czas: `);
+        await interaction.reply(`**Wyciszono** użytkownika ${member.username} z powodu: ${reason}, na czas: TODO`);
         member.timeout(time, reason);
     },
 };
