@@ -23,6 +23,6 @@ module.exports = {
         }
 
         channel.send(content);
-        await interaction.reply(`Wysłano wiadomość na kanał: ${channel}, o treści: "${content}"`);
+        await interaction.reply(`Wysłano wiadomość na kanał: ${channel} o treści: "${content}"`);
     },
 };
