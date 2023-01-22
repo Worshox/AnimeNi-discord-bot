@@ -1,0 +1,9 @@
+deployment:
+[ ] mute command: time period in message
+[ ] help command
+[ ] logs
+[ ] 
+
+production:
+[ ] set all config files
+[ ] set permissions for all commands
