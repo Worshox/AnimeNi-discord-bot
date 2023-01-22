@@ -1,0 +1,3 @@
+config/.env: "DISCORD_BOT_TOKEN" = index.js, deploy-commands.js
+config/config.json: "clientID" = deploy-commmands.js
+config/config.json: "guildID" = deploy-commmands.js
