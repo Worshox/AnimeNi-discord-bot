@@ -1,6 +1,7 @@
 config/.env:                        "DISCORD_BOT_TOKEN"         = index.js, deploy-commands.js
 config/config.json:                 "clientID"                  = deploy-commmands.js
 config/config.json:                 "guildID"                   = deploy-commmands.js
+config/bot-configuration.json:      "fullBotConfiguration"      = konfiguruj-bota.js, ready.js
 config/bot-configuration.json:      "botAvatarURL"              = guildMemberAdd.js, guildMemberRemove.js
 config/welcome.json:                "welcomeChannelID"          = guildMemberAdd.js
 config/welcome.json:                "welcomeChannelMessage"     = guildMemberAdd.js

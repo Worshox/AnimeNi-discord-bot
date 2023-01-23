@@ -3,7 +3,7 @@ deployment:
 [ ] mute command: time period in message
 [ ] help command
 [ ] logs
-[ ] 
+[ ] crash on bot configuration
 
 production:
 [ ] set all config files
