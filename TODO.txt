@@ -3,7 +3,8 @@ deployment:
 [ ] mute command: time period in message
 [ ] help command
 [ ] logs
-[ ] crash on bot configuration
+[ ] catch crash on bot configuration
+[ ] rebuild pings reading in ready.js
 
 production:
 [ ] set all config files
