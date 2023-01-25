@@ -1,11 +1,17 @@
-const { Events, ActivityType } = require('discord.js');
+const { Events, ActivityType, EmbedBuilder } = require('discord.js');
+const { roleMention } = require('discord.js');
+const fs = require('node:fs');
+const path = require('node:path');
+const axios = require('axios');
 const fullBotConfiguration = require('../config/bot-configuration.json');
-const { lastKnownVideoID } = require('../config/video-update.json');
+const allVideoPings = require('../config/video-pings.json');
+const { lastKnownVideoID, videoChannelID } = require('../config/video-update.json');
+let fullVideoUpdateInfo = require('../config/video-update.json');
 
 module.exports = {
     name: Events.ClientReady,
     once: true,
-    async execute(client){
+    async execute(client) {
         switch (fullBotConfiguration.botActivity) {
             case 'watching':    client.user.setActivity(fullBotConfiguration.botActivityDetails, { type: ActivityType.Watching }); break;
             case 'streaming':   client.user.setActivity(fullBotConfiguration.botActivityDetails, { type: ActivityType.Streaming }); break;
@@ -21,10 +27,10 @@ module.exports = {
             case 'invisible':   client.user.setStatus('invisible'); break;
         }
 
-        console.log(`Bot online! Logged as ${client.user.tag} ${client.presence.clientStatus} ${client.presence.activities}`);
+        console.log(`Bot works! Logged as ${client.user.tag}, he is ${fullBotConfiguration.botActivity} ${fullBotConfiguration.botActivityDetails}`);
 
         // DON'T TOUCH THE CODE BELOW UNDER ANY CIRCUMSTANCES! WORKS = DON'T TOUCH!
-        // setInterval(findNewVideos, 60_000);
+        setInterval(findNewVideos, 60_000);
 
         async function findNewVideos() {
             const response = await axios('https://animeni.pl/wp-json/wp/v2/anime?per_page=10&_embed', {headers: {"Accept-Encoding": "*"}});
@@ -32,7 +38,7 @@ module.exports = {
             let newVideosCount = -1;
 
             for (const singleVideo of response.data) {
-                if (singleVideo.id === lastKnownVideoId) break;
+                if (singleVideo.id === lastKnownVideoID) break;
                 
                 newVideosCount++;
             }
@@ -40,8 +46,8 @@ module.exports = {
             for (let i = newVideosCount; i >= 0; i--) {
                 const videoData = response.data[i];
                 
-                const thumbnailData = `https://animeni.pl/?attachment_id=${videoData.acf.okladka_filmu}`;
-                const imageData = `https://animeni.pl/?attachment_id=${ videoData.acf['Zdjęcie w tle'] }`;
+                const videoThumbnailData = `https://animeni.pl/?attachment_id=${videoData.acf.okladka_filmu}`;
+                const videoImageData = `https://animeni.pl/?attachment_id=${videoData.acf['Zdjęcie w tle']}`;
                 
                 if (videoData.acf.tlumaczy_grupa.includes('<a')) {
                     videoData.acf.tlumaczy_grupa = videoData.acf.tlumaczy_grupa.split('>')[1].slice(0, -4); //Extract data from link
@@ -72,43 +78,38 @@ module.exports = {
                         inline: true,
                     },
                 ];
-    
-                //FIXME
-                // const file = path.resolve(__dirname, '../configs/pings.txt');
-                // const readStream = fs.createReadStream(file);
-                // const readLines = readline.createInterface({input: readStream});
-                // let specificAnimeId;
-                // readLines.on('line', (line) => {
-                //     if (videoData.link.split('/')[4].includes(line.split(';')[2]))
-                //         specificAnimeId = line.split(';')[1];
-                // });
-    
-                // readLines.on('close', () => {
-                //     const descripton = `Zapraszany do oglądania! ${roleMention(odcinkiRoleId)} ${specificAnimeId ? roleMention(specificAnimeId) : ''}`;
-    
-                //     const postEmbed = new EmbedBuilder()
-                //         .setColor(0x950A0A)
-                //         .setTitle(videoData.title.rendered)
-                //         .setURL(videoData.link)
-                //         .setAuthor({ name: videoData._embedded.author[0].name, iconURL: videoData._embedded.author[0].avatar_urls["24"], url: videoData._embedded.author[0].link })
-                //         .setDescription(descripton)
-                //         .setThumbnail(thumbnailData)
-                //         .addFields(fields)
-                //         .setImage(imageData)
-                //         .setTimestamp()
-                //         .setFooter({ text: 'AnimeNi', iconURL: 'https://animeni.pl/wp-content/uploads/2022/12/logo-v2.png' });
-        
-                //     const channel = client.channels.cache.get(animeChannelId);
-                //     channel.send({ embeds: [postEmbed] }); 
-                // });
 
-                // if (!i){
-                //     const newLastKnownVideoId = JSON.stringify({ "lastKnownVideoId" : videoData.id });
-                //     const fileToUpdate = path.resolve(__dirname, '../configs/episodes.json');
-                //     fs.writeFile(fileToUpdate, newLastKnownVideoId, (error) => {
-                //         if (error) console.log(error);
-                //     });
-                // }
+                let roleToPingID;
+                for (const videoPing in allVideoPings) {
+                    if(videoData.link.split('/')[4].includes(videoPing[0]))   // find video series name in URL
+                        roleToPingID = videoPing[1];
+                }
+    
+                const descripton = `Zapraszany do oglądania! ${roleMention(allVideoPings.odcinki[1])} ${roleToPingID ? roleMention(roleToPingID) : ''}`;
+
+                const videoEmbed = new EmbedBuilder()
+                    .setColor(0x950A0A)
+                    .setTitle(videoData.title.rendered)
+                    .setURL(videoData.link)
+                    .setAuthor({ name: videoData._embedded.author[0].name, iconURL: videoData._embedded.author[0].avatar_urls["24"], url: videoData._embedded.author[0].link })
+                    .setDescription(descripton)
+                    .setThumbnail(videoThumbnailData)
+                    .addFields(fields)
+                    .setImage(videoImageData)
+                    .setTimestamp()
+                    .setFooter({ text: 'AnimeNi', iconURL: client.defaultAvatarURL });
+    
+                const channel = client.channels.cache.get(videoChannelID);
+                channel.send({ embeds: [videoEmbed] }); 
+                
+                if (!i) {
+                    fullVideoUpdateInfo.lastKnownVideoID = videoData.id;
+                    const newVideoUpdateInfo = JSON.stringify(fullVideoUpdateInfo);
+                    const vidoeUpdateFile = path.resolve(__dirname, '../config/video-update.json');
+                    fs.writeFile(vidoeUpdateFile, newVideoUpdateInfo, (error) => {
+                        if (error) console.log(error);
+                    });
+                }
             }
         }
     },
