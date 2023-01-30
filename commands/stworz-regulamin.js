@@ -1,7 +1,9 @@
 const { SlashCommandBuilder, Events, ModalBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder } = require('discord.js');
 const { PermissionFlagsBits } = require('discord.js');
+const { inlineCode } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
+const { messageID } = require('../config/ruleset.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,6 +15,11 @@ module.exports = {
             .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
     async execute(interaction) {
+        if (messageID) {
+            await interaction.reply(`Regulamin już został stworzony! Możesz go zedytować komendą ${inlineCode('/edytuj-regulamin')}`);
+            return;
+        }
+
         const client = interaction.client;
 
         const modal = new ModalBuilder()
