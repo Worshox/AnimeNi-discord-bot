@@ -66,11 +66,11 @@ module.exports = {
             try {
                 const customEmbed = new EmbedBuilder()
                     .setAuthor({ name: modalInteraction.user.username, iconURL: modalInteraction.user.avatarURL()})
-                    .setTitle(modalInteraction.fields.getTextInputValue('embedTitleInput'))
-                    .setDescription(modalInteraction.fields.getTextInputValue('embedContentInput'))
-                    .setColor(modalInteraction.fields.getTextInputValue('embedColorInput') ? `0x${modalInteraction.fields.getTextInputValue('embedColorInput')}` : 0x950A0A)
-                    .setImage(modalInteraction.fields.getTextInputValue('embedImageInput') || null)
-                    .setFooter({ text: modalInteraction.fields.getTextInputValue('embedFooterInput') || 'AnimeNi', iconURL: modalInteraction.user.avatarURL()})
+                    .setTitle(modalInteraction.fields.getTextInputValue('createEmbedTitleInput'))
+                    .setDescription(modalInteraction.fields.getTextInputValue('createEmbedContentInput'))
+                    .setColor(modalInteraction.fields.getTextInputValue('createEmbedColourInput') ? `0x${modalInteraction.fields.getTextInputValue('createEmbedColourInput')}` : 0x950A0A)
+                    .setImage(modalInteraction.fields.getTextInputValue('createEmbedImageInput') || null)
+                    .setFooter({ text: modalInteraction.fields.getTextInputValue('createEmbedFooterInput') || 'AnimeNi', iconURL: modalInteraction.user.avatarURL()})
                     .setTimestamp();
 
                 channel.send({ embeds: [customEmbed] });
@@ -78,6 +78,7 @@ module.exports = {
             }
 
             catch (error) {
+                console.log(error);
                 modalInteraction.reply('Nie udało się stworzyć embeda, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia)');
             } 
         });
