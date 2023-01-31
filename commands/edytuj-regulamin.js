@@ -4,7 +4,7 @@ const { inlineCode } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const rulesetInfo = require('../config/ruleset.json')
-const { messageID } = require('../config/ruleset.json');
+const { userRoleID, messageID } = require('../config/ruleset.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -80,22 +80,24 @@ module.exports = {
                     .setFooter({ text: modalInteraction.fields.getTextInputValue('editRulesetFooterInput') || 'AnimeNi', iconURL: client.user.avatarURL()})
 
                 channel.messages.fetch(rulesetInfo.messageID)
-                    .then(message => message.edit({ embeds: [editedRulesetEmbed] }));
-
-                const newRulesetInfo = {
-                    "messageID": rulesetInfo.messageID,
-                    "channelID": rulesetInfo.channelID,
-                    "title": modalInteraction.fields.getTextInputValue('editRulesetTitleInput'),
-                    "content": modalInteraction.fields.getTextInputValue('editRulesetContentInput'),
-                    "colour": modalInteraction.fields.getTextInputValue('editRulesetColourInput') ? `0x${modalInteraction.fields.getTextInputValue('editRulesetColourInput')}` : '0x950A0A',
-                    "image": modalInteraction.fields.getTextInputValue('editRulesetImageInput') || null,
-                    "footer": modalInteraction.fields.getTextInputValue('editRulesetFooterInput') || 'AnimeNi'
-                }
-
-                const rulesetFile = path.resolve(__dirname, '../config/ruleset.json');
-                fs.writeFile(rulesetFile, JSON.stringify(newRulesetInfo), (error) => {
-                    if (error) console.log(error);
-                });
+                    .then(message => {
+                        message.edit({ embeds: [editedRulesetEmbed] });
+                        const newRulesetInfo = {
+                            "userRoleID": userRoleID,
+                            "messageID": rulesetInfo.messageID,
+                            "channelID": rulesetInfo.channelID,
+                            "title": modalInteraction.fields.getTextInputValue('editRulesetTitleInput'),
+                            "content": modalInteraction.fields.getTextInputValue('editRulesetContentInput'),
+                            "colour": modalInteraction.fields.getTextInputValue('editRulesetColourInput') ? `0x${modalInteraction.fields.getTextInputValue('editRulesetColourInput')}` : '0x950A0A',
+                            "image": modalInteraction.fields.getTextInputValue('editRulesetImageInput') || null,
+                            "footer": modalInteraction.fields.getTextInputValue('editRulesetFooterInput') || 'AnimeNi'
+                        }
+        
+                        const rulesetFile = path.resolve(__dirname, '../config/ruleset.json');
+                        fs.writeFile(rulesetFile, JSON.stringify(newRulesetInfo), (error) => {
+                            if (error) console.log(error);
+                        });
+                    });
 
                 modalInteraction.reply(`Regulamin pomyślnie zedytowano!`);
             }

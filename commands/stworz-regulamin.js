@@ -3,7 +3,7 @@ const { PermissionFlagsBits } = require('discord.js');
 const { inlineCode } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const { messageID } = require('../config/ruleset.json');
+const { userRoleID, messageID } = require('../config/ruleset.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -86,6 +86,7 @@ module.exports = {
                 message.react('✅');
 
                 const rulesetInfo = {
+                    "userRoleID": userRoleID,
                     "messageID": message.id,
                     "channelID": message.channel.id,
                     "title": modalInteraction.fields.getTextInputValue('createRulesetTitleInput'),
