@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { PermissionFlagsBits } = require('discord.js');
 const { roleMention } = require('discord.js');
-const { Console } = require('node:console');
 const fs = require('node:fs');
 const path = require('node:path');
 const reactionRoles = require('../config/reaction-roles.json');
