@@ -5,6 +5,7 @@ deployment:
 [ ] logs
 [ ] catch crash on bot configuration
 [ ] rebuild pings reading in ready.js
+[ ] refactor mutable objects in commands
 
 production:
 [ ] set all config files
