@@ -95,7 +95,7 @@ module.exports = {
                 modalInteraction.reply(`Regulamin pomyślnie zedytowano!`);
             }
             catch (error) {
-                modalInteraction.reply('Nie udało się zedytować regulaminu, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia)');
+                modalInteraction.reply('Nie udało się zedytować regulaminu, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia).');
             }
         });
     }
