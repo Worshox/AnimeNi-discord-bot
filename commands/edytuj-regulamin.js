@@ -71,12 +71,12 @@ module.exports = {
 
             try {
                 const editedRulesetEmbed = new EmbedBuilder()
-                    .setAuthor({ name: client.user.username, iconURL: client.user.avatarURL()})
+                    .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL()})
                     .setTitle(modalInteraction.fields.getTextInputValue('editRulesetTitleInput'))
                     .setDescription(modalInteraction.fields.getTextInputValue('editRulesetContentInput'))
                     .setColor(modalInteraction.fields.getTextInputValue('editRulesetColourInput') ? `0x${modalInteraction.fields.getTextInputValue('editRulesetColourInput')}` : rulesetInfo.colour)
                     .setImage(modalInteraction.fields.getTextInputValue('editRulesetImageInput') || null)
-                    .setFooter({ text: modalInteraction.fields.getTextInputValue('editRulesetFooterInput') || 'AnimeNi', iconURL: client.user.avatarURL()})
+                    .setFooter({ text: modalInteraction.fields.getTextInputValue('editRulesetFooterInput') || 'AnimeNi', iconURL: client.user.displayAvatarURL()})
 
                 channel.messages.fetch(rulesetInfo.messageID)
                     .then(message => {

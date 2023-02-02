@@ -80,12 +80,12 @@ module.exports = {
 
             try {
                 const rulesetEmbed = new EmbedBuilder()
-                    .setAuthor({ name: client.user.username, iconURL: client.user.avatarURL()})
+                    .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL()})
                     .setTitle(modalInteraction.fields.getTextInputValue('createRulesetTitleInput'))
                     .setDescription(modalInteraction.fields.getTextInputValue('createRulesetContentInput'))
                     .setColor(modalInteraction.fields.getTextInputValue('createRulesetColourInput') ? `0x${modalInteraction.fields.getTextInputValue('createRulesetColourInput')}` : 0x950A0A)
                     .setImage(modalInteraction.fields.getTextInputValue('createRulesetImageInput') || null)
-                    .setFooter({ text: modalInteraction.fields.getTextInputValue('createRulesetFooterInput') || 'AnimeNi', iconURL: client.user.avatarURL()})
+                    .setFooter({ text: modalInteraction.fields.getTextInputValue('createRulesetFooterInput') || 'AnimeNi', iconURL: client.user.displayAvatarURL()})
 
                 const message = await channel.send({ embeds: [rulesetEmbed] });
                 message.react('✅');
