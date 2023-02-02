@@ -8,7 +8,7 @@ module.exports = {
         .setDescription('Odbanuj użytkownika na serwerze')
         .addUserOption(option => option
             .setName('użytkownik')
-            .setDescription('Kogo chcesz odbanować')
+            .setDescription('Użytkownik, którego chcesz odbanować')
             .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers),
     async execute(interaction) {

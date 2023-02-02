@@ -29,7 +29,7 @@ module.exports = {
         console.log(`Bot works! Logged as ${client.user.tag}, he is ${botConfiguration.botActivity} ${botConfiguration.botActivityDetails}`);
 
         // DON'T TOUCH THE CODE BELOW UNDER ANY CIRCUMSTANCES! WORKS = DON'T TOUCH!
-        setInterval(findNewVideos, 10_000);
+        setInterval(findNewVideos, 60_000);
 
         async function findNewVideos() {
             const response = await axios('https://animeni.pl/wp-json/wp/v2/anime?per_page=10&_embed', { headers: {"Accept-Encoding": "*"} });

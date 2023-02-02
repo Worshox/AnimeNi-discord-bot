@@ -4,7 +4,7 @@ const { userRoleID, messageID } = require('../config/ruleset.json');
 module.exports = {
     name: Events.MessageReactionRemove,
     async execute(reaction, user){
-        if (reaction.message.id != messageID || reaction.emoji.name != '✅') return;
+        if (reaction.message.id !== messageID || reaction.emoji.name !== '✅') return;
         
         if (reaction.partial) {
             try {

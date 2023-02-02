@@ -6,14 +6,14 @@ const videoPings = require('../config/video-pings.json');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('pokaz-pingi')
-        .setDescription('Wyświetla listę aktualnie pingowanych ról przy odcinkach')
+        .setDescription('Wyświetla listę aktualnie pingowanych ról przy powiadomieniach odcinków')
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles),
     async execute(interaction) {
         const client = interaction.client;
 
         let rolesContent = '';
         for (const singlePing in videoPings) {
-            rolesContent += `Rola: ${roleMention(videoPings[singlePing][1])}; slug: ${videoPings[singlePing][0]}\n`;
+            rolesContent += `Rola: ${roleMention(videoPings[singlePing][1])}; slug: ${videoPings[singlePing][0]} \n`;
         }
 
         const videoPingsEmbed = new EmbedBuilder()

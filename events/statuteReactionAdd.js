@@ -4,11 +4,11 @@ const { userRoleID, messageID } = require('../config/ruleset.json');
 module.exports = {
     name: Events.MessageReactionAdd,
     async execute(reaction, user){
-        if (reaction.message.id == messageID && reaction.emoji.name != '✅') {
+        if (reaction.message.id === messageID && reaction.emoji.name !== '✅') {
             reaction.remove();
             return;
         }
-        if (reaction.message.id != messageID || reaction.emoji.name != '✅') return;
+        if (reaction.message.id !== messageID || reaction.emoji.name !== '✅') return;
         
         if (reaction.partial) {
             try {

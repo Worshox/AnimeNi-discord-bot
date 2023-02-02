@@ -4,7 +4,6 @@ const { inlineCode } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const rulesetInfo = require('../config/ruleset.json')
-const { userRoleID, messageID } = require('../config/ruleset.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,7 +11,7 @@ module.exports = {
         .setDescription('Wyświetla formularz pozwalający edytować regulamin istniejący na serwerze')
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
     execute(interaction) {
-        if (!messageID) {
+        if (!rulesetInfo.messageID) {
             interaction.reply(`Regulamin jeszcze nie został stworzony! Możesz go stworzyć komendą ${inlineCode('/stworz-regulamin')}`);
             return;
         }
@@ -75,33 +74,26 @@ module.exports = {
                     .setAuthor({ name: client.user.username, iconURL: client.user.avatarURL()})
                     .setTitle(modalInteraction.fields.getTextInputValue('editRulesetTitleInput'))
                     .setDescription(modalInteraction.fields.getTextInputValue('editRulesetContentInput'))
-                    .setColor(modalInteraction.fields.getTextInputValue('editRulesetColourInput') ? `0x${modalInteraction.fields.getTextInputValue('editRulesetColourInput')}` : 0x950A0A)
+                    .setColor(modalInteraction.fields.getTextInputValue('editRulesetColourInput') ? `0x${modalInteraction.fields.getTextInputValue('editRulesetColourInput')}` : rulesetInfo.colour)
                     .setImage(modalInteraction.fields.getTextInputValue('editRulesetImageInput') || null)
                     .setFooter({ text: modalInteraction.fields.getTextInputValue('editRulesetFooterInput') || 'AnimeNi', iconURL: client.user.avatarURL()})
 
                 channel.messages.fetch(rulesetInfo.messageID)
                     .then(message => {
                         message.edit({ embeds: [editedRulesetEmbed] });
-                        const newRulesetInfo = {
-                            "userRoleID": userRoleID,
-                            "messageID": rulesetInfo.messageID,
-                            "channelID": rulesetInfo.channelID,
-                            "title": modalInteraction.fields.getTextInputValue('editRulesetTitleInput'),
-                            "content": modalInteraction.fields.getTextInputValue('editRulesetContentInput'),
-                            "colour": modalInteraction.fields.getTextInputValue('editRulesetColourInput') ? `0x${modalInteraction.fields.getTextInputValue('editRulesetColourInput')}` : '0x950A0A',
-                            "image": modalInteraction.fields.getTextInputValue('editRulesetImageInput') || null,
-                            "footer": modalInteraction.fields.getTextInputValue('editRulesetFooterInput') || 'AnimeNi'
-                        }
+                        rulesetInfo.title = editedRulesetEmbed.data.title;
+                        rulesetInfo.content = editedRulesetEmbed.data.description;
+                        rulesetInfo.colour = editedRulesetEmbed.data.color;
+                        rulesetInfo.image = editedRulesetEmbed.data.image ? editedRulesetEmbed.data.image.url : null;
+                        rulesetInfo.footer = editedRulesetEmbed.data.footer.text;
         
                         const rulesetFile = path.resolve(__dirname, '../config/ruleset.json');
-                        fs.writeFile(rulesetFile, JSON.stringify(newRulesetInfo), (error) => {
+                        fs.writeFile(rulesetFile, JSON.stringify(rulesetInfo), (error) => {
                             if (error) console.log(error);
                         });
                     });
-
                 modalInteraction.reply(`Regulamin pomyślnie zedytowano!`);
             }
-
             catch (error) {
                 modalInteraction.reply('Nie udało się zedytować regulaminu, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia)');
             }

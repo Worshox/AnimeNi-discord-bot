@@ -8,7 +8,7 @@ module.exports = {
         .setDescription('Wycisz użytkownika na serwerze')
         .addUserOption(option => option
             .setName('użytkownik')
-            .setDescription(`Kogo chcesz wyciszyć`)
+            .setDescription(`Użytkownik, którego chcesz wyciszyć`)
             .setRequired(true))
         .addStringOption(option => option
             .setName('czas')

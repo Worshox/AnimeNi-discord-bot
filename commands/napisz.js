@@ -1,12 +1,13 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('napisz')
-        .setDescription('Wyślij wiadomość na czacie jako bot')
+        .setDescription('Wyślij wiadomość na czacie przez bota')
         .addChannelOption(option => option
             .setName('kanał')
-            .setDescription('Kanał na który ma zostać wysłana wiadomość')
+            .setDescription('Kanał, na który ma zostać wysłana wiadomość')
             .setRequired(true))
         .addStringOption(option => option
             .setName('wiadomość')
@@ -17,7 +18,7 @@ module.exports = {
         const channel = interaction.options.getChannel('kanał');
         const content = interaction.options.getString('wiadomość');
 
-        if (channel.type != 0){
+        if (channel.type !== 0){
             await interaction.reply('Zły kanał - możesz podać tylko kanał tekstowy.');
             return;
         }

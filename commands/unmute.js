@@ -8,13 +8,13 @@ module.exports = {
         .setDescription('Odcisz użytkownika na tym serwerze')
         .addUserOption(option => option
             .setName('użytkownik')
-            .setDescription('Kogo chcesz odciszyć')
+            .setDescription('Użytkownik, którego chcesz odciszyć')
             .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
     async execute(interaction) {
         const member = interaction.options.getMember('użytkownik');
 
         member.timeout(1);
-        await interaction.reply(`${bold('Odciszono')} użytkownika ${member.user.username}. Administracja się nad tobą zlitowała i Cię odciszyła.`);
+        await interaction.reply(`${bold('Odciszono')} użytkownika ${member.user.username}.`);
     },
 };

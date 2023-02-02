@@ -8,14 +8,15 @@ module.exports = {
     name: Events.GuildRoleDelete,
     async execute(role){
         if (role.id in reactionRoles === false) return;
+        
         const client = role.client;
-
         const reaction = reactionRoles[role.id][0];
+
         delete reactionRoles[role.id];
 
         let reactionRolesContent = '';
         for (const singleReactionRole in reactionRoles) {
-            if (["messageID", "channelID"].includes(singleReactionRole)) continue;
+            if (['messageID', 'channelID'].includes(singleReactionRole)) continue;
 
             reactionRolesContent += `${reactionRoles[singleReactionRole][0]} - ${roleMention(singleReactionRole)} - ${reactionRoles[singleReactionRole][1]}\n`;
         }
@@ -24,7 +25,7 @@ module.exports = {
             .setColor(0x950A0A)
             .setTitle('Role na serwerze AnimeNi')
             .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
-            .setDescription(reactionRolesContent || "Brak ról do wyświetlenia")
+            .setDescription(reactionRolesContent || 'Brak ról do wyświetlenia')
             .setTimestamp()
             .setFooter({ text: 'AnimeNi', iconURL: client.user.displayAvatarURL() });
         

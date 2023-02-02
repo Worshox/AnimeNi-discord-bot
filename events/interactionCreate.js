@@ -8,7 +8,7 @@ module.exports = {
         const command = interaction.client.commands.get(interaction.commandName);
 
         if (!command) {
-            console.error(`Command not found: ${interaction.commandName}`);
+            console.error(`Nie znaleziono komendy: ${interaction.commandName}`);
             interaction.reply(`Nie znaleziono komendy ${interaction.commandName}`);
             return;
         }
@@ -16,7 +16,7 @@ module.exports = {
         try {
             await command.execute(interaction);
         } catch (error) {
-            console.error(`Error occurred while executing: ${interaction.commandName}`)
+            console.error(`Wystąpił błąd przy wykonywaniu tej komendy: ${interaction.commandName}`)
             console.error(error);
             await interaction.reply({ content: 'Wystąpił błąd przy wykonywaniu tej komendy!', ephemeral: true});
         }

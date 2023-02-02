@@ -3,15 +3,16 @@ const { PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('stworz-embeda')
-        .setDescription('Wyświetla formularz pozwalający wysłać embeda na dany kanał')
-        .addChannelOption(option => option
-            .setName('kanał')
-            .setDescription('Kanał na który ma zostać wysłana wiadomość')
-            .setRequired(true))
+    .setName('stworz-embeda')
+    .setDescription('Wyświetla formularz pozwalający wysłać embeda na dany kanał')
+    .addChannelOption(option => option
+        .setName('kanał')
+        .setDescription('Kanał, na który ma zostać wysłana wiadomość')
+        .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
     async execute(interaction) {
-
+        const channel = interaction.options.getChannel('kanał');
+            
         const modal = new ModalBuilder()
             .setCustomId('createEmbedModal')
             .setTitle('Stwórz Embeda');
@@ -53,12 +54,11 @@ module.exports = {
         modal.addComponents(firstActionRow, secondActionRow, thirdActionRow, forthActionRow, fifthActionRow);
 
         interaction.showModal(modal);
-        const channel = interaction.options.getChannel('kanał');
 
         interaction.client.once(Events.InteractionCreate, modalInteraction => {
             if (!modalInteraction.isModalSubmit()) return;
             
-            if (channel.type != 0){
+            if (channel.type !== 0){
                 modalInteraction.reply('Zły kanał - możesz podać tylko kanał tekstowy.');
                 return;
             }

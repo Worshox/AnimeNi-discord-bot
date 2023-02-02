@@ -2,7 +2,7 @@ const { SlashCommandBuilder, ActivityType } = require('discord.js');
 const { PermissionFlagsBits } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-let fullBotConfiguration = require('../config/bot-configuration.json');
+const botConfiguration = require('../config/bot-configuration.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -41,7 +41,7 @@ module.exports = {
         if (interaction.options.getString('nazwa')) {
             try {
                 interaction.client.user.setUsername(interaction.options.getString('nazwa'));
-                fullBotConfiguration.botName = interaction.options.getString('nazwa');
+                botConfiguration.botName = interaction.options.getString('nazwa');
             }
             catch (error) {
                 await interaction.reply({ content: 'Wystąpił błąd, najprawdopodomniej wprowadzona nazwa jest zbyt popularna', ephemeral: true});
@@ -52,7 +52,7 @@ module.exports = {
         if (interaction.options.getString('avatar')) {
             try{
                 interaction.client.user.setAvatar(interaction.options.getString('avatar'));
-                fullBotConfiguration.botAvatarURL = interaction.options.getString('avatar');
+                botConfiguration.botAvatarURL = interaction.options.getString('avatar');
             } catch (error) {
                 await interaction.reply({ content: 'Wystąpił błąd, najprawdopodomniej podałeś zły URL obrazu', ephemeral: true});
                 return;
@@ -64,52 +64,51 @@ module.exports = {
             switch (interaction.options.getString('aktywność')) {
                 case 'watching': 
                     interaction.client.user.setActivity(activityDetails, { type: ActivityType.Watching }); 
-                    fullBotConfiguration.botActivity = "watching";
+                    botConfiguration.botActivity = "watching";
                     break;
                 case 'streaming': 
                     interaction.client.user.setActivity(activityDetails, { type: ActivityType.Streaming }); 
-                    fullBotConfiguration.botActivity = "streaming";
+                    botConfiguration.botActivity = "streaming";
                     break;
                 case 'playing': 
                     interaction.client.user.setActivity(activityDetails, { type: ActivityType.Playing }); 
-                    fullBotConfiguration.botActivity = "playing";
+                    botConfiguration.botActivity = "playing";
                     break;
                 case 'listening': 
                     interaction.client.user.setActivity(activityDetails, { type: ActivityType.Listening });     
-                    fullBotConfiguration.botActivity = "listening";
+                    botConfiguration.botActivity = "listening";
                     break;
                 case 'competing': 
                     interaction.client.user.setActivity(activityDetails, { type: ActivityType.Competing }); 
-                    fullBotConfiguration.botActivity = "competing";
+                    botConfiguration.botActivity = "competing";
                     break;
             }
-            fullBotConfiguration.botActivityDetails = activityDetails;
+            botConfiguration.botActivityDetails = activityDetails;
         }
 
         if (interaction.options.getString('status')) {
             switch (interaction.options.getString('status')) {
                 case 'online': 
                     interaction.client.user.setStatus('online'); 
-                    fullBotConfiguration.botStatus = 'online';
+                    botConfiguration.botStatus = 'online';
                     break;
                 case 'idle': 
                     interaction.client.user.setStatus('idle'); 
-                    fullBotConfiguration.botStatus = 'idle';
+                    botConfiguration.botStatus = 'idle';
                     break;
                 case 'dnd': 
                     interaction.client.user.setStatus('dnd'); 
-                    fullBotConfiguration.botStatus = 'dnd';
+                    botConfiguration.botStatus = 'dnd';
                     break;
                 case 'invisible': 
                     interaction.client.user.setStatus('invisible'); 
-                    fullBotConfiguration.botStatus = 'invisible';
+                    botConfiguration.botStatus = 'invisible';
                     break;
             }
         }
 
-        const newBotConfiguration = JSON.stringify(fullBotConfiguration);
         const botConfigurationFile = path.resolve(__dirname, '../config/bot-configuration.json');
-        fs.writeFile(botConfigurationFile, newBotConfiguration, (error) => {
+        fs.writeFile(botConfigurationFile, JSON.stringify(botConfiguration), (error) => {
             if (error) console.log(error);
         });
 

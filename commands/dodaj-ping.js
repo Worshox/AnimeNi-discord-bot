@@ -10,7 +10,7 @@ module.exports = {
     .setDescription('Dodaje nową rolę do pingowania odcinków')
     .addRoleOption(option => option
             .setName('rola')
-            .setDescription('Rola krórą chcesz dodać')
+            .setDescription('Rola, krórą chcesz dodać')
             .setRequired(true))
     .addStringOption(option => option
             .setName('slug')
@@ -20,12 +20,10 @@ module.exports = {
     async execute(interaction) {
         const role = interaction.options.getRole('rola');
         const slug = interaction.options.getString('slug');
-        
-        for (const singlePing in videoPings) {
-            if (singlePing === role.name) {
-                await interaction.reply(`Rola ${role.name} już była dodana do pingów!`);
-                return;
-            }
+
+        if (role.name in videoPings) {
+            await interaction.reply(`Rola ${role.name} już była dodana do pingów!`);
+            return;
         }
 
         videoPings[role.name] = [slug, role.id];

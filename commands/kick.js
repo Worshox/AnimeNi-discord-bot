@@ -1,4 +1,6 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { PermissionFlagsBits } = require('discord.js');
+const { bold } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -6,7 +8,7 @@ module.exports = {
         .setDescription('Wyrzuć użytkownika z serwera')
         .addUserOption(option => option
             .setName('użytkownik')
-            .setDescription(`Kogo chcesz wyrzucić`)
+            .setDescription(`Użytkownik, którego chcesz wyrzucić`)
             .setRequired(true))
         .addStringOption(option => option
             .setName('powód')
@@ -16,7 +18,7 @@ module.exports = {
         const member = interaction.options.getMember('użytkownik');
         const reason = interaction.options.getString('powód') || 'Nie podano przyczyny';
 
-        await interaction.reply(`**Wyrzucono** użytkownika ${member.user.tag} z powodu: ${reason}.`);
+        await interaction.reply(`${bold('Wyrzucono')} użytkownika ${member.user.tag} z powodu: ${reason}.`);
         member.kick(reason);
     },
 };

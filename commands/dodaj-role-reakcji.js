@@ -11,11 +11,11 @@ module.exports = {
         .setDescription('Dodaj rolę, którą użytkownicy będą mogli sobie dodać poprzez reakcję')
         .addRoleOption(option => option
             .setName('rola')
-            .setDescription('Rola króra ma być dodawana przez reakcję')
+            .setDescription('Rola, króra ma być dodawana przez reakcję')
             .setRequired(true))
         .addStringOption(option => option
             .setName('reakcja')
-            .setDescription('Reakcja którą musi dać użytkownik, aby otrzymać rolę')
+            .setDescription('Reakcja, którą musi dać użytkownik, aby otrzymać rolę')
             .setRequired(true))
         .addStringOption(option => option
             .setName('opis')
@@ -23,7 +23,7 @@ module.exports = {
             .setRequired(true))
         .addChannelOption(option => option
             .setName('kanał')
-            .setDescription('Kanał na który ma zostać wysłana wiadomosć z reakcjami (jeśli nie istnieje)')
+            .setDescription('Kanał, na który ma zostać wysłana wiadomosć z reakcjami (jeśli nie istnieje)')
         )
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles),
     async execute(interaction) {
@@ -32,13 +32,13 @@ module.exports = {
         const reaction = interaction.options.getString('reakcja');
         const description = interaction.options.getString('opis');
 
-        for (const singleReactionRole in reactionRoles) {
-            if (singleReactionRole === role.id) {
-                await interaction.reply(`Rola ${roleMention(role.id)} już ma swoją reakcję!`);
-                return;
-            }
+        if (role.id in reactionRoles) {
+            await interaction.reply(`Rola ${roleMention(role.id)} już ma swoją reakcję!`);
+            return;
+        }
 
-            if (reactionRoles[singleReactionRole][0] === reaction) {
+        for (const singleRole in reactionRoles) {
+            if (reactionRoles[singleRole][0] === reaction) {
                 await interaction.reply(`Reakcja ${reaction} już jest zajęta!`);
                 return;
             }
@@ -74,7 +74,7 @@ module.exports = {
                 });
         } else {
             const channel = interaction.options.getChannel('kanał');
-            if (!channel || channel.type > 0){
+            if (!channel || channel.type){
                 await interaction.reply('Podałeś zły kanał');
                 delete reactionRoles[role.id];
                 return;

@@ -3,7 +3,7 @@ const { PermissionFlagsBits } = require('discord.js');
 const { inlineCode } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const { userRoleID, messageID } = require('../config/ruleset.json');
+const rulesetInfo = require('../config/ruleset.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,16 +11,22 @@ module.exports = {
         .setDescription('Wyświetla formularz pozwalający stworzyć i wysłać regulamin na określony kanał')
         .addChannelOption(option => option
             .setName('kanał')
-            .setDescription('Kanał na który ma zostać wysłany regulamin')
+            .setDescription('Kanał, na który ma zostać wysłany regulamin')
+            .setRequired(true))
+        .addRoleOption(option => option
+            .setName('rola')
+            .setDescription('Rola, która ma być przyznawana po zaakceptowaniu regulaminu')
             .setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
     async execute(interaction) {
-        if (messageID) {
+        if (rulesetInfo.messageID) {
             await interaction.reply(`Regulamin już został stworzony! Możesz go zedytować komendą ${inlineCode('/edytuj-regulamin')}`);
             return;
         }
-
+        
         const client = interaction.client;
+        const channel = interaction.options.getChannel('kanał');
+        const role = interaction.options.getRole('rola');
 
         const modal = new ModalBuilder()
             .setCustomId('createRulesetModal')
@@ -63,12 +69,11 @@ module.exports = {
         modal.addComponents(firstActionRow, secondActionRow, thirdActionRow, forthActionRow, fifthActionRow);
 
         interaction.showModal(modal);
-        const channel = interaction.options.getChannel('kanał');
 
         interaction.client.once(Events.InteractionCreate, async modalInteraction => {
             if (!modalInteraction.isModalSubmit()) return;
             
-            if (channel.type != 0){
+            if (channel.type !== 0){
                 modalInteraction.reply('Zły kanał - możesz podać tylko kanał tekstowy.');
                 return;
             }
@@ -85,16 +90,14 @@ module.exports = {
                 const message = await channel.send({ embeds: [rulesetEmbed] });
                 message.react('✅');
 
-                const rulesetInfo = {
-                    "userRoleID": userRoleID,
-                    "messageID": message.id,
-                    "channelID": message.channel.id,
-                    "title": modalInteraction.fields.getTextInputValue('createRulesetTitleInput'),
-                    "content": modalInteraction.fields.getTextInputValue('createRulesetContentInput'),
-                    "colour": modalInteraction.fields.getTextInputValue('createRulesetColourInput') ? `0x${modalInteraction.fields.getTextInputValue('createRulesetColourInput')}` : '0x950A0A',
-                    "image": modalInteraction.fields.getTextInputValue('createRulesetImageInput') || null,
-                    "footer": modalInteraction.fields.getTextInputValue('createRulesetFooterInput') || 'AnimeNi'
-                }
+                rulesetInfo.userRoleID = role.id;
+                rulesetInfo.messageID = message.id;
+                rulesetInfo.channelID = message.channel.id;
+                rulesetInfo.title = rulesetEmbed.data.title;
+                rulesetInfo.content = rulesetEmbed.data.description;
+                rulesetInfo.colour = rulesetEmbed.data.color;
+                rulesetInfo.image = rulesetEmbed.data.image ? rulesetEmbed.data.image.url : null;
+                rulesetInfo.footer = rulesetEmbed.data.footer.text;
 
                 const rulesetFile = path.resolve(__dirname, '../config/ruleset.json');
                 fs.writeFile(rulesetFile, JSON.stringify(rulesetInfo), (error) => {
@@ -105,7 +108,8 @@ module.exports = {
             }
 
             catch (error) {
-                modalInteraction.reply('Nie udało się stworzyć regulaminu, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia)');
+                console.log(error)
+                modalInteraction.reply('Nie udało się stworzyć regulaminu, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia), lub wystąpił błąd aplikacji.');
             }
         });
     }

@@ -1,24 +1,23 @@
-const { Events, EmbedBuilder } = require('discord.js');
-const { userMention } = require('discord.js');
-const { byeChannelID, byeMessage, byeMessageImage } = require('../config/bye.json');
-const { botAvatarURL } = require('../config/bot-configuration.json');
+const { Events, EmbedBuilder, ApplicationCommandPermissionType } = require('discord.js');
+const byeInfo = require('../config/bye.json');
 
 module.exports = {
     name: Events.GuildMemberRemove,
     once: true,
     execute(member){
+        console.log('Serwer opuszczono');
         const client = member.client;
 
         const byeEmbed = new EmbedBuilder()
             .setColor(0x950A0A)
-            .setTitle("Szkoda, że nas opuszczasz :(")
-            .setAuthor({ name: client.user.username, iconURL: botAvatarURL })
-            .setDescription(`${byeMessage}`)
-            .setImage(byeMessageImage)
+            .setTitle('Szkoda, że nas opuszczasz :(')
+            .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
+            .setDescription(`${member} ${byeInfo.message}`)
+            .setImage(byeInfo.messageImage)
             .setTimestamp()
             .setFooter({ text: `Teraz jest ${member.guild.memberCount} członków na serwerze`, iconURL: member.avatar });
 
-        const channel = client.channels.cache.get(byeChannelID);
+        const channel = client.channels.cache.get(byeInfo.channelID);
         channel.send({ embeds: [byeEmbed] });
     },
 };

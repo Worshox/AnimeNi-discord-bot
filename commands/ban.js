@@ -8,7 +8,7 @@ module.exports = {
         .setDescription('Zbanuj użytkownika na serwerze')
         .addUserOption(option => option
             .setName('użytkownik')
-            .setDescription('Kogo chcesz zbanować')
+            .setDescription('Użytkownik, którego chcesz zbanować')
             .setRequired(true))
         .addStringOption(option => option
             .setName('powód')

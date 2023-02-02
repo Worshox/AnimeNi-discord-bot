@@ -16,21 +16,18 @@ module.exports = {
     async execute(interaction) {
         const role = interaction.options.getRole('rola');
         
-        for (const singlePing in videoPings) {
-            if (singlePing === role.name) {
-
-                delete videoPings[role.name];
-
-                const videoPingsFile = path.resolve(__dirname, '../config/video-pings.json');
-                fs.writeFile(videoPingsFile, JSON.stringify(videoPings), (error) => {
-                    if (error) console.log(error);
-                });
-
-                await interaction.reply(`Rola ${role.name} została pomyślnie usunięta z pingów!`);
-                return;
-            }
+        if (role.name in videoPings === false) {
+            await interaction.reply(`Rola ${role.name} nie istnieje w pingach odcinków!`);
+            return;
         }
 
-        await interaction.reply(`Rola ${role.name} nie istnieje w pingach odcinków!`);
+        delete videoPings[role.name];
+
+        const videoPingsFile = path.resolve(__dirname, '../config/video-pings.json');
+        fs.writeFile(videoPingsFile, JSON.stringify(videoPings), (error) => {
+            if (error) console.log(error);
+        });
+
+        await interaction.reply(`Rola ${role.name} została pomyślnie usunięta z pingów!`);   
     },
 };
