@@ -74,7 +74,7 @@ module.exports = {
                     .setTimestamp();
 
                 channel.send({ embeds: [customEmbed] });
-                modalInteraction.reply(`Embeda wysłano na kanał ${channel.name}!`);
+                modalInteraction.reply(`Embeda wysłano na kanał ${channel}!`);
             }
 
             catch (error) {

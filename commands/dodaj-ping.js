@@ -33,6 +33,6 @@ module.exports = {
             if (error) console.log(error);
         });
 
-        await interaction.reply(`Rola ${role.name} została pomyślnie dodana do pingów odcinków!`);
+        await interaction.reply(`Rola ${role} została pomyślnie dodana do pingów odcinków!`);
     },
 };

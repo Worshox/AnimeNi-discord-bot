@@ -28,6 +28,6 @@ module.exports = {
             if (error) console.log(error);
         });
 
-        await interaction.reply(`Rola ${role.name} została pomyślnie usunięta z pingów!`);   
+        await interaction.reply(`Rola ${role} została pomyślnie usunięta z pingów!`);   
     },
 };

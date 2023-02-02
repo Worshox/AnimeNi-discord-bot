@@ -104,7 +104,7 @@ module.exports = {
                     if (error) console.log(error);
                 });
 
-                modalInteraction.reply(`Regulamin zapisano i wysłano na kanał ${channel.name}!`);
+                modalInteraction.reply(`Regulamin zapisano i wysłano na kanał ${channel}!`);
             }
 
             catch (error) {

@@ -15,6 +15,6 @@ module.exports = {
         const member = interaction.options.getMember('użytkownik');
 
         member.timeout(1);
-        await interaction.reply(`${bold('Odciszono')} użytkownika ${member.user.username}.`);
+        await interaction.reply(`${bold('Odciszono')} użytkownika ${member}.`);
     },
 };
