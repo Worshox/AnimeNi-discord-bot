@@ -3,42 +3,41 @@ const { roleMention } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const axios = require('axios');
-const fullBotConfiguration = require('../config/bot-configuration.json');
-const allVideoPings = require('../config/video-pings.json');
-const { lastKnownVideoID, videoChannelID } = require('../config/video-update.json');
-let fullVideoUpdateInfo = require('../config/video-update.json');
+const botConfiguration = require('../config/bot-configuration.json');
+const videoPings = require('../config/video-pings.json');
+const videoUpdate = require('../config/video-update.json');
 
 module.exports = {
     name: Events.ClientReady,
     once: true,
     async execute(client) {
-        switch (fullBotConfiguration.botActivity) {
-            case 'watching':    client.user.setActivity(fullBotConfiguration.botActivityDetails, { type: ActivityType.Watching }); break;
-            case 'streaming':   client.user.setActivity(fullBotConfiguration.botActivityDetails, { type: ActivityType.Streaming }); break;
-            case 'playing':     client.user.setActivity(fullBotConfiguration.botActivityDetails, { type: ActivityType.Playing }); break;
-            case 'listening':   client.user.setActivity(fullBotConfiguration.botActivityDetails, { type: ActivityType.Listening }); break;
-            case 'competing':   client.user.setActivity(fullBotConfiguration.botActivityDetails, { type: ActivityType.Competing }); break;
+        switch (botConfiguration.botActivity) {
+            case 'watching':    client.user.setActivity(botConfiguration.botActivityDetails, { type: ActivityType.Watching }); break;
+            case 'streaming':   client.user.setActivity(botConfiguration.botActivityDetails, { type: ActivityType.Streaming }); break;
+            case 'playing':     client.user.setActivity(botConfiguration.botActivityDetails, { type: ActivityType.Playing }); break;
+            case 'listening':   client.user.setActivity(botConfiguration.botActivityDetails, { type: ActivityType.Listening }); break;
+            case 'competing':   client.user.setActivity(botConfiguration.botActivityDetails, { type: ActivityType.Competing }); break;
         }
         
-        switch (fullBotConfiguration.botStatus) {
+        switch (botConfiguration.botStatus) {
             case 'online':      client.user.setStatus('online'); break;
             case 'idle':        client.user.setStatus('idle'); break;
             case 'dnd':         client.user.setStatus('dnd'); break;
             case 'invisible':   client.user.setStatus('invisible'); break;
         }
 
-        console.log(`Bot works! Logged as ${client.user.tag}, he is ${fullBotConfiguration.botActivity} ${fullBotConfiguration.botActivityDetails}`);
+        console.log(`Bot works! Logged as ${client.user.tag}, he is ${botConfiguration.botActivity} ${botConfiguration.botActivityDetails}`);
 
         // DON'T TOUCH THE CODE BELOW UNDER ANY CIRCUMSTANCES! WORKS = DON'T TOUCH!
-        setInterval(findNewVideos, 60_000);
+        setInterval(findNewVideos, 10_000);
 
         async function findNewVideos() {
-            const response = await axios('https://animeni.pl/wp-json/wp/v2/anime?per_page=10&_embed', {headers: {"Accept-Encoding": "*"}});
+            const response = await axios('https://animeni.pl/wp-json/wp/v2/anime?per_page=10&_embed', { headers: {"Accept-Encoding": "*"} });
 
             let newVideosCount = -1;
 
             for (const singleVideo of response.data) {
-                if (singleVideo.id === lastKnownVideoID) break;
+                if (singleVideo.id === videoUpdate.lastKnownVideoID) break;
                 
                 newVideosCount++;
             }
@@ -50,7 +49,7 @@ module.exports = {
                 const videoImageData = `https://animeni.pl/?attachment_id=${videoData.acf['Zdjęcie w tle']}`;
                 
                 if (videoData.acf.tlumaczy_grupa.includes('<a')) {
-                    videoData.acf.tlumaczy_grupa = videoData.acf.tlumaczy_grupa.split('>')[1].slice(0, -4); //Extract data from link
+                    videoData.acf.tlumaczy_grupa = videoData.acf.tlumaczy_grupa.split('>')[1].slice(0, -4);     //Extract data from link
                 }
     
                 const fields = [
@@ -79,13 +78,13 @@ module.exports = {
                     },
                 ];
 
-                let roleToPingID;
-                for (const videoPing in allVideoPings) {
-                    if(videoData.link.split('/')[4].includes(videoPing[0]))   // find video series name in URL
-                        roleToPingID = videoPing[1];
+                let extraRolePingID = '';
+                const videoName = videoData.link.split('/')[4];     //Extract video name from link
+                for (const videoPing in videoPings) {
+                    if(videoName.includes(videoPing[0])) extraRolePingID = videoPing[1];
                 }
     
-                const descripton = `Zapraszany do oglądania! ${roleMention(allVideoPings.odcinki[1])} ${roleToPingID ? roleMention(roleToPingID) : ''}`;
+                const descripton = `Zapraszany do oglądania! ${roleMention(videoPings.odcinki[1])} ${extraRolePingID = '' ? roleMention(extraRolePingID) : ''}`;
 
                 const videoEmbed = new EmbedBuilder()
                     .setColor(0x950A0A)
@@ -97,16 +96,15 @@ module.exports = {
                     .addFields(fields)
                     .setImage(videoImageData)
                     .setTimestamp()
-                    .setFooter({ text: 'AnimeNi', iconURL: client.defaultAvatarURL });
+                    .setFooter({ text: 'AnimeNi', iconURL: client.user.displayAvatarURL() });
     
-                const channel = client.channels.cache.get(videoChannelID);
-                channel.send({ embeds: [videoEmbed] }); 
+                const channel = client.channels.cache.get(videoUpdate.videoChannelID);
+                await channel.send({ embeds: [videoEmbed] });
                 
                 if (!i) {
-                    fullVideoUpdateInfo.lastKnownVideoID = videoData.id;
-                    const newVideoUpdateInfo = JSON.stringify(fullVideoUpdateInfo);
+                    videoUpdate.lastKnownVideoID = videoData.id;
                     const vidoeUpdateFile = path.resolve(__dirname, '../config/video-update.json');
-                    fs.writeFile(vidoeUpdateFile, newVideoUpdateInfo, (error) => {
+                    fs.writeFile(vidoeUpdateFile, JSON.stringify(videoUpdate), (error) => {
                         if (error) console.log(error);
                     });
                 }
