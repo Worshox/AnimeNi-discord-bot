@@ -1,4 +1,6 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { PermissionFlagsBits } = require('discord.js');
+const { bold } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,7 +14,7 @@ module.exports = {
     async execute(interaction) {
         const member = interaction.options.getMember('użytkownik');
 
-        await interaction.reply(`**Odciszono** użytkownika ${member.nickname}.`);
-        member.timeout(0, 'Administracja się nad tobą zlitowała i Cię odciszyła.');
+        member.timeout(1);
+        await interaction.reply(`${bold('Odciszono')} użytkownika ${member.user.username}. Administracja się nad tobą zlitowała i Cię odciszyła.`);
     },
 };
