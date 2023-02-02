@@ -1,4 +1,6 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { PermissionFlagsBits } = require('discord.js');
+const { bold } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,12 +15,13 @@ module.exports = {
             .setDescription('Dlaczego banujesz daną osobę'))
         .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers),
     async execute(interaction) {
+        const client = interaction.client;
         const user = interaction.options.getUser('użytkownik');
-        const reason = interaction.options.getString('powód') || 'Nie podano przyczyny.';
+        const reason = interaction.options.getString('powód') || 'Nie podano przyczyny';
 
-        await interaction.reply(`**Zbanowano** użytkownika ${user.tag} z powodu: ${reason}.`);
+        client.users.send(user.id ,`Zostałeś zbanowany na serwerze AnimeNi z powodu: ${reason}.`);
         await interaction.guild.members.ban(user);
 
-        user.message.send(`Zostałeś zbanowany na serwerze AnimeNi z powodu: ${reason}.`);
+        await interaction.reply(`${bold('Zbanowano')} użytkownika ${user.tag} z powodu: ${reason}.`);
     },
 };

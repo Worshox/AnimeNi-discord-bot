@@ -1,4 +1,6 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { PermissionFlagsBits } = require('discord.js');
+const { bold } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,7 +14,7 @@ module.exports = {
     async execute(interaction) {
         const user = interaction.options.getUser('użytkownik');
 
-        await interaction.reply(`**Odbanowano** użytkownika ${user.username}.`);
         await interaction.guild.members.unban(user);
+        await interaction.reply(`${bold('Odbanowano')} użytkownika ${user.username}.`);
     },
 };
