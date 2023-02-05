@@ -30,6 +30,7 @@ module.exports = {
             if (role.id in reactionRoles[singleGroup]) {
                 roleExists = true;
                 groupName = singleGroup;
+                break;
             }
         }
         if (!roleExists) {
