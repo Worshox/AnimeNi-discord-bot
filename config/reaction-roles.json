@@ -1,1 +1,19 @@
-{}
+{
+  "ogolne": {
+    "messageID": "1071362754360913990",
+    "channelID": "1064163133591130202",
+    "title": "ogolne",
+    "colour": 16711680,
+    "image": null,
+    "footer": "AnimeNi"
+  },
+  "bajki": {
+    "messageID": "1071396079939092500",
+    "channelID": "1064163133591130202",
+    "title": "Bajki",
+    "colour": 255,
+    "image": null,
+    "footer": "helol",
+    "1064293459218931743": ["🐱", "test"]
+  }
+}
