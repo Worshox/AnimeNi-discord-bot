@@ -1,4 +1,5 @@
 const { Events } = require('discord.js');
+const { log } = require('../logger');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -15,6 +16,7 @@ module.exports = {
 
         try {
             await command.execute(interaction);
+            log(`Użytkownik ${interaction.user.tag} użył komendy ${interaction.commandName}`);
         } catch (error) {
             console.error(`Wystąpił błąd przy wykonywaniu tej komendy: ${interaction.commandName}`)
             console.error(error);

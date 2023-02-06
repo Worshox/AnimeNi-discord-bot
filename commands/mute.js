@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { PermissionFlagsBits } = require('discord.js');
 const { bold } = require('discord.js');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -39,5 +40,7 @@ module.exports = {
 
         member.timeout(time, reason);
         await interaction.reply(`${bold('Wyciszono')} użytkownika ${member.user.username} z powodu: ${reason}, na ${timeInWords}`);
+
+        log(`<mute> Użytkownik ${interaction.user.tag} wyciszył użytkownika ${member.user.tag} z powodu: ${reason}, na ${timeInWords}.`);
     },
 };

@@ -1,8 +1,8 @@
-deployment:
+development:
 [X] mention creator
 [X] mute command: time period in message
-[ ] help command
-[ ] logs
+[X] help command
+[X] logs
 [X] catch crash on bot configuration
 [X] rebuild pings reading in ready.js
 [X] refactor mutable objects in commands
@@ -10,5 +10,5 @@ deployment:
 [X] usun-grupe-reakcji.js
 
 production:
-[ ] set all config files
+[ ] set up all config files
 [ ] set permissions for all commands

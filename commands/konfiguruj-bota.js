@@ -3,6 +3,7 @@ const { PermissionFlagsBits } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const botConfiguration = require('../config/bot-configuration.json');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -113,5 +114,7 @@ module.exports = {
         });
 
         await interaction.reply('Zapisano ustawienia bota!');
+
+        log(`<konfiguruj-bota> Użytkownik ${interaction.user.tag} zmienił ustawienia statusu bota.`);
     },
 };

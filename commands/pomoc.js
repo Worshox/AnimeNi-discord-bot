@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { PermissionFlagsBits } = require('discord.js');
 const { inlineCode, hyperlink } = require('discord.js');
 const { version } = require('../package.json');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -59,5 +60,7 @@ module.exports = {
             .setFooter({ text: footerContent, iconURL: client.user.displayAvatarURL() });
 
         await interaction.reply({ embeds: [helpEmbed] });
+
+        log(`<pomoc> Użytkownik ${interaction.user.tag} użył wiadomości pomocy.`);
     },
 };

@@ -4,6 +4,7 @@ const { roleMention, inlineCode } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const reactionRoles = require('../config/reaction-roles.json');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -83,5 +84,7 @@ module.exports = {
         });
         
         await interaction.reply('Rolę reakcji pomyślnie dodano!');
+
+        log(`<dodaj-role-reakcji> Użytkownik ${interaction.user.tag} dodał rolę reakcji ${role.name} do grupy ${group}.`);
     },
 };

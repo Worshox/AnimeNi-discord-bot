@@ -1,12 +1,11 @@
 const { Events, EmbedBuilder } = require('discord.js');
-const { userMention } = require('discord.js');
 const welcomeInfo = require('../config/welcome.json');
+const { log } = require('../logger');
 
 module.exports = {
     name: Events.GuildMemberAdd,
     once: true,
     execute(member){
-        console.log('Na serwer dołączono');
         const client = member.client;
 
         const welcomeChannelEmbed = new EmbedBuilder()
@@ -31,5 +30,7 @@ module.exports = {
             .setFooter({ text: `Jesteś ${member.guild.memberCount}. członkiem serwera`, iconURL: member.avatar });
 
         client.users.send(member.id, { embeds: [welcomePrivateEmbed] });
+
+        log(`Użytkownik ${member.user.tag} wszedł na serwer.`);
     },
 };

@@ -1,11 +1,11 @@
-const { Events, EmbedBuilder, ApplicationCommandPermissionType } = require('discord.js');
+const { Events, EmbedBuilder } = require('discord.js');
 const byeInfo = require('../config/bye.json');
+const { log } = require('../logger');
 
 module.exports = {
     name: Events.GuildMemberRemove,
     once: true,
     execute(member){
-        console.log('Serwer opuszczono');
         const client = member.client;
 
         const byeEmbed = new EmbedBuilder()
@@ -19,5 +19,7 @@ module.exports = {
 
         const channel = client.channels.cache.get(byeInfo.channelID);
         channel.send({ embeds: [byeEmbed] });
+
+        log(`Użytkownik ${member.user.tag} opuścił serwer.`);
     },
 };

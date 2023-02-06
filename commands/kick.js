@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { PermissionFlagsBits } = require('discord.js');
 const { bold } = require('discord.js');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -20,5 +21,7 @@ module.exports = {
 
         await interaction.reply(`${bold('Wyrzucono')} użytkownika ${member.user.tag} z powodu: ${reason}.`);
         member.kick(reason);
+
+        log(`<kick> Użytkownik ${interaction.user.tag} wyrzucił użytkownika ${member.user.tag} z powodu: ${reason}.`);
     },
 };

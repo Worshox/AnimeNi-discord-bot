@@ -3,6 +3,7 @@ const { PermissionFlagsBits } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const videoPings = require('../config/video-pings.json');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -34,5 +35,7 @@ module.exports = {
         });
 
         await interaction.reply(`Rola ${role} została pomyślnie dodana do pingów odcinków!`);
+
+        log(`<dodaj-ping> Użytkownik ${interaction.user.tag} dodał rolę ${role.name} do pingów odcinków.`);
     },
 };

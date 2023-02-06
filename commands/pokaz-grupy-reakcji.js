@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { PermissionFlagsBits } = require('discord.js');
 const { roleMention, inlineCode } = require('discord.js');
 const reactionRoles = require('../config/reaction-roles.json');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -34,5 +35,7 @@ module.exports = {
             .setFooter({ text: 'AnimeNi', iconURL: client.user.displayAvatarURL() });
 
         await interaction.reply({ embeds: [reactionRolesEmbed] });
+
+        log(`<pokaz-grupy-reakcji> Użytkownik ${interaction.user.tag} sprawdził grupy reakcji.`);
     },
 };

@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, Events, ModalBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder } = require('discord.js');
 const { PermissionFlagsBits } = require('discord.js');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -75,6 +76,8 @@ module.exports = {
 
                 channel.send({ embeds: [customEmbed] });
                 modalInteraction.reply(`Embeda wysłano na kanał ${channel}!`);
+
+                log(`<stworz-embeda> Użytkownik ${interaction.user.tag} stworzył embeda na kanale ${channel.name}.`);
             }
 
             catch (error) {

@@ -3,7 +3,8 @@ const { PermissionFlagsBits } = require('discord.js');
 const { inlineCode } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const rulesetInfo = require('../config/ruleset.json')
+const rulesetInfo = require('../config/ruleset.json');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -93,6 +94,8 @@ module.exports = {
                         });
                     });
                 modalInteraction.reply(`Regulamin pomyślnie zedytowano!`);
+
+                log(`<edytuj-regulamin> Użytkownik ${interaction.user.tag} zedytował regulamin.`);
             }
             catch (error) {
                 modalInteraction.reply('Nie udało się zedytować regulaminu, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia).');

@@ -6,6 +6,7 @@ const axios = require('axios');
 const botConfiguration = require('../config/bot-configuration.json');
 const videoPings = require('../config/video-pings.json');
 const videoUpdate = require('../config/video-update.json');
+const { log } = require('../logger');
 
 module.exports = {
     name: Events.ClientReady,
@@ -27,6 +28,8 @@ module.exports = {
         }
 
         console.log(`Bot works! Logged as ${client.user.tag}, he is ${botConfiguration.botActivity} ${botConfiguration.botActivityDetails}`);
+
+        log(`Bot uruchomiony! Zalogowano jako ${client.user.tag}, ${botConfiguration.botActivity} ${botConfiguration.botActivityDetails}`);
 
         // DON'T TOUCH THE CODE BELOW UNDER ANY CIRCUMSTANCES! WORKS = DON'T TOUCH!
         setInterval(findNewVideos, 60_000);
@@ -100,6 +103,8 @@ module.exports = {
     
                 const channel = client.channels.cache.get(videoUpdate.videoChannelID);
                 await channel.send({ embeds: [videoEmbed] });
+
+                log(`Wysłano powiadomienie o nowym odcinku "${videoData.title.rendered}" na kanał ${channel.name}`);
                 
                 if (!i) {
                     videoUpdate.lastKnownVideoID = videoData.id;

@@ -4,6 +4,7 @@ const { inlineCode } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const reactionRoles = require('../config/reaction-roles.json');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -38,5 +39,7 @@ module.exports = {
 
 
         await interaction.reply(`Grupę ${inlineCode(groupName)} pomyślnie usunięto!`);
+
+        log(`<usun-grupe-reakcji> Użytkownik ${interaction.user.tag} usunął grupę reakcji ${groupName}.`);
     },
 };

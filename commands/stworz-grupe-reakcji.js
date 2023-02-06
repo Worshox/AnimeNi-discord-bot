@@ -4,6 +4,7 @@ const { inlineCode } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const reactionRoles = require('../config/reaction-roles.json');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -99,6 +100,8 @@ module.exports = {
                 });
 
                 modalInteraction.reply(`Embeda roli reakcji wysłano na kanał ${channel}! Czas dodać do niego role komendą: ${inlineCode('/dodaj-role-reakcji')}.`);
+
+                log(`<stworz-grupe-reakcji> Użytkownik ${interaction.user.tag} stworzył grupę roli reakcji ${groupName}.`);
             }
 
             catch (error) {

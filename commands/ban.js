@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { PermissionFlagsBits } = require('discord.js');
 const { bold } = require('discord.js');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -23,5 +24,7 @@ module.exports = {
         await interaction.guild.members.ban(user);
 
         await interaction.reply(`${bold('Zbanowano')} użytkownika ${user.tag} z powodu: ${reason}.`);
+        
+        log(`<ban> Użytkownik ${interaction.user.tag} zbanował użytkownika ${user.tag} z powodu: ${reason}.`);
     },
 };

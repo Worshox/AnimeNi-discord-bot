@@ -4,6 +4,7 @@ const { inlineCode } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const rulesetInfo = require('../config/ruleset.json');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -105,6 +106,8 @@ module.exports = {
                 });
 
                 modalInteraction.reply(`Regulamin zapisano i wysłano na kanał ${channel}!`);
+
+                log(`<stworz-regulamin> Użytkownik ${interaction.user.tag} stworzył regulamin serwera i wysłał go na kanał ${channel.name}.`);
             }
 
             catch (error) {

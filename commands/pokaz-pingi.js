@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { PermissionFlagsBits } = require('discord.js');
 const { roleMention } = require('discord.js');
 const videoPings = require('../config/video-pings.json');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -25,5 +26,7 @@ module.exports = {
             .setFooter({ text: 'AnimeNi', iconURL: client.user.displayAvatarURL() });
 
         await interaction.reply({ embeds: [videoPingsEmbed] });
+
+        log(`<pokaz-pingi> Użytkownik ${interaction.user.tag} sprawdził pingi odcinków.`);
     },
 };

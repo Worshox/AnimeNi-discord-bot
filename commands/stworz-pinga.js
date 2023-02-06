@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { PermissionFlagsBits } = require('discord.js');
 const { inlineCode } = require('discord.js');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -35,5 +36,7 @@ module.exports = {
         if (interaction.options.getSubcommand() === 'rola') formattedPing = inlineCode(interaction.options.getRole('rola'));
 
         await interaction.reply(`Proszę bardzo, oto twój ping! \n ${formattedPing}`);
+
+        log(`<stworz-pinga> Użytkownik ${interaction.user.tag} utworzył sobie pinga ${formattedPing}.`);
     },
 };

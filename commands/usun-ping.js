@@ -3,6 +3,7 @@ const { PermissionFlagsBits } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const videoPings = require('../config/video-pings.json');
+const { log } = require('../logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -28,6 +29,8 @@ module.exports = {
             if (error) console.log(error);
         });
 
-        await interaction.reply(`Rola ${role} została pomyślnie usunięta z pingów!`);   
+        await interaction.reply(`Rola ${role} została pomyślnie usunięta z pingów!`);
+        
+        log(`<usun-ping> Użytkownik ${interaction.user.tag} usunął rolę ${role.name} z pingów odcinków.`);
     },
 };

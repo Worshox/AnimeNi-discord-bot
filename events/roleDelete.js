@@ -1,9 +1,9 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const { roleMention } = require('discord.js');
-const { group } = require('node:console');
 const fs = require('node:fs');
 const path = require('node:path');
 const reactionRoles = require('../config/reaction-roles.json');
+const { log } = require('../logger');
 
 module.exports = {
     name: Events.GuildRoleDelete,
@@ -52,6 +52,6 @@ module.exports = {
                 });
             });
         
-        console.log(`Ze względu na usunięcie roli ${role.name}, usunięto ją z roli reakcji dla grupy ${groupName}!`);
+        log(`Ze względu na usunięcie roli ${role.name}, usunięto ją z roli reakcji dla grupy ${groupName}`);
     },
 };
