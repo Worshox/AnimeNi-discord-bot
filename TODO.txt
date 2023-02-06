@@ -6,8 +6,8 @@ deployment:
 [X] catch crash on bot configuration
 [X] rebuild pings reading in ready.js
 [X] refactor mutable objects in commands
-[ ] pokaz-grupy-reakcji.js
-[ ] usun-grupe-reakcji.js
+[X] pokaz-grupy-reakcji.js
+[X] usun-grupe-reakcji.js
 
 production:
 [ ] set all config files
