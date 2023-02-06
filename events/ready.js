@@ -40,7 +40,7 @@ module.exports = {
             let newVideosCount = -1;
 
             for (const singleVideo of response.data) {
-                if (singleVideo.id === videoUpdate.lastKnownVideoID) break;
+                if (singleVideo.id <= videoUpdate.lastKnownVideoID) break;
                 
                 newVideosCount++;
             }
@@ -84,10 +84,12 @@ module.exports = {
                 let extraRolePingID = '';
                 const videoName = videoData.link.split('/')[4];     //Extract video name from link
                 for (const videoPing in videoPings) {
-                    if(videoName.includes(videoPing[0])) extraRolePingID = videoPing[1];
+                    if (videoName.includes(videoPings[videoPing][0])) {
+                        extraRolePingID = videoPings[videoPing][1];
+                    } 
                 }
-    
-                const descripton = `Zapraszany do oglądania! ${roleMention(videoPings.odcinki[1])} ${extraRolePingID = '' ? roleMention(extraRolePingID) : ''}`;
+
+                const descripton = `Zapraszany do oglądania! ${roleMention(videoPings.odcinki[1])} ${extraRolePingID !== '' ? roleMention(extraRolePingID) : ''}`;
 
                 const videoEmbed = new EmbedBuilder()
                     .setColor(0x950A0A)
