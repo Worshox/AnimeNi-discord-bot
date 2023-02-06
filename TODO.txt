@@ -10,5 +10,11 @@ development:
 [X] usun-grupe-reakcji.js
 
 production:
-[ ] set up all config files
+[ ] set up all config files:
+    - welcome.json: channelID
+    - bye.json: channelID
+    - config.json: guildID
+    - video-uptade.json: videoChannelID
+
+    - reaction-roles.json, ruleset.json, video-pings.json
 [ ] set permissions for all commands
