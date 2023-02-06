@@ -27,6 +27,6 @@ module.exports = {
         channel.send(content);
         await interaction.reply(`Wysłano wiadomość na kanał: ${channel} o treści: "${content}"`);
 
-        log(`<napisz> Użytkownik ${interaction.user.tag} wysłał przez bota wiadomość na kanał ${channel} o treści: "${content}"`);
+        log(`<napisz> Użytkownik ${interaction.user.tag} wysłał przez bota wiadomość na kanał ${channel.name} o treści: "${content}"`);
     },
 };
