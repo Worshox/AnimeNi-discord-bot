@@ -14,7 +14,7 @@ module.exports = {
             .setName('grupa')
             .setDescription('Grupa reakcji, którą chcesz usunąć')
             .setRequired(true))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const client = interaction.client;
         const groupName = interaction.options.getString('grupa');
@@ -40,6 +40,6 @@ module.exports = {
 
         await interaction.reply(`Grupę ${inlineCode(groupName)} pomyślnie usunięto!`);
 
-        log(`<usun-grupe-reakcji> Użytkownik ${interaction.user.tag} usunął grupę reakcji ${groupName}.`);
+        // log(`<usun-grupe-reakcji> Użytkownik ${interaction.user.tag} usunął grupę reakcji ${groupName}.`);
     },
 };

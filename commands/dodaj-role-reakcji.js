@@ -26,7 +26,7 @@ module.exports = {
             .setName('grupa')
             .setDescription('Nazwa grupy reakcji, do której chcesz dodać rolę reakcji')
             .setRequired(true))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const client = interaction.client;
         const role = interaction.options.getRole('rola');
@@ -85,6 +85,6 @@ module.exports = {
         
         await interaction.reply('Rolę reakcji pomyślnie dodano!');
 
-        log(`<dodaj-role-reakcji> Użytkownik ${interaction.user.tag} dodał rolę reakcji ${role.name} do grupy ${group}.`);
+        // log(`<dodaj-role-reakcji> Użytkownik ${interaction.user.tag} dodał rolę reakcji ${role.name} do grupy ${group}.`);
     },
 };

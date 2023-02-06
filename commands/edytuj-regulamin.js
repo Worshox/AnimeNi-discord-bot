@@ -10,7 +10,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('edytuj-regulamin')
         .setDescription('Wyświetla formularz pozwalający edytować regulamin istniejący na serwerze')
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     execute(interaction) {
         if (!rulesetInfo.messageID) {
             interaction.reply(`Regulamin jeszcze nie został stworzony! Możesz go stworzyć komendą ${inlineCode('/stworz-regulamin')}`);
@@ -95,7 +95,7 @@ module.exports = {
                     });
                 modalInteraction.reply(`Regulamin pomyślnie zedytowano!`);
 
-                log(`<edytuj-regulamin> Użytkownik ${interaction.user.tag} zedytował regulamin.`);
+                // log(`<edytuj-regulamin> Użytkownik ${interaction.user.tag} zedytował regulamin.`);
             }
             catch (error) {
                 modalInteraction.reply('Nie udało się zedytować regulaminu, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia).');

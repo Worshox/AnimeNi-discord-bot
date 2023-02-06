@@ -14,7 +14,7 @@ module.exports = {
             .setName('wiadomość')
             .setDescription('Treść wysyłanej wiadomości')
             .setRequired(true))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const channel = interaction.options.getChannel('kanał');
         const content = interaction.options.getString('wiadomość');
@@ -27,6 +27,6 @@ module.exports = {
         channel.send(content);
         await interaction.reply(`Wysłano wiadomość na kanał: ${channel} o treści: "${content}"`);
 
-        log(`<napisz> Użytkownik ${interaction.user.tag} wysłał przez bota wiadomość na kanał ${channel.name} o treści: "${content}"`);
+        // log(`<napisz> Użytkownik ${interaction.user.tag} wysłał przez bota wiadomość na kanał ${channel.name} o treści: "${content}"`);
     },
 };

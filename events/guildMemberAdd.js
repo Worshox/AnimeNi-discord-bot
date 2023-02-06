@@ -31,6 +31,6 @@ module.exports = {
 
         client.users.send(member.id, { embeds: [welcomePrivateEmbed] });
 
-        log(`Użytkownik ${member.user.tag} wszedł na serwer.`);
+        // log(`Użytkownik ${member.user.tag} wszedł na serwer.`);
     },
 };

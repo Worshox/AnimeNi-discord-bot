@@ -28,7 +28,7 @@ module.exports = {
                     .setName('rola')
                     .setDescription('Rola, którą chcesz spingować')
                     .setRequired(true)))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         let formattedPing;
         if (interaction.options.getSubcommand() === 'użytkownik') formattedPing = inlineCode(interaction.options.getUser('użytkownik'));
@@ -37,6 +37,6 @@ module.exports = {
 
         await interaction.reply(`Proszę bardzo, oto twój ping! \n ${formattedPing}`);
 
-        log(`<stworz-pinga> Użytkownik ${interaction.user.tag} utworzył sobie pinga ${formattedPing}.`);
+        // log(`<stworz-pinga> Użytkownik ${interaction.user.tag} utworzył sobie pinga ${formattedPing}.`);
     },
 };

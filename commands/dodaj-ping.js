@@ -17,7 +17,7 @@ module.exports = {
             .setName('slug')
             .setDescription('Fragment w linku z nazwą serii (min. 2 słowa oddzielone "-")')
             .setRequired(true))
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles),
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const role = interaction.options.getRole('rola');
         const slug = interaction.options.getString('slug');
@@ -36,6 +36,6 @@ module.exports = {
 
         await interaction.reply(`Rola ${role} została pomyślnie dodana do pingów odcinków!`);
 
-        log(`<dodaj-ping> Użytkownik ${interaction.user.tag} dodał rolę ${role.name} do pingów odcinków.`);
+        // log(`<dodaj-ping> Użytkownik ${interaction.user.tag} dodał rolę ${role.name} do pingów odcinków.`);
     },
 };

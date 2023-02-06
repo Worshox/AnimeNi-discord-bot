@@ -24,7 +24,7 @@ module.exports = {
         .addStringOption(option => option
             .setName('powód')
             .setDescription('Dlaczego wyciszasz tego użytkownika'))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
+        .setDefaultMemberPermissions(PermissionFlagsBits.MuteMembers),
     async execute(interaction) {
         const member = interaction.options.getMember('użytkownik');
         const time = +interaction.options.getString('czas');
@@ -41,6 +41,6 @@ module.exports = {
         member.timeout(time, reason);
         await interaction.reply(`${bold('Wyciszono')} użytkownika ${member.user.username} z powodu: ${reason}, na ${timeInWords}`);
 
-        log(`<mute> Użytkownik ${interaction.user.tag} wyciszył użytkownika ${member.user.tag} z powodu: ${reason}, na ${timeInWords}.`);
+        // log(`<mute> Użytkownik ${interaction.user.tag} wyciszył użytkownika ${member.user.tag} z powodu: ${reason}, na ${timeInWords}.`);
     },
 };

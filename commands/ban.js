@@ -25,6 +25,6 @@ module.exports = {
 
         await interaction.reply(`${bold('Zbanowano')} użytkownika ${user.tag} z powodu: ${reason}.`);
         
-        log(`<ban> Użytkownik ${interaction.user.tag} zbanował użytkownika ${user.tag} z powodu: ${reason}.`);
+        // log(`<ban> Użytkownik ${interaction.user.tag} zbanował użytkownika ${user.tag} z powodu: ${reason}.`);
     },
 };

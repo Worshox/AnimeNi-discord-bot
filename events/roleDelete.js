@@ -52,6 +52,6 @@ module.exports = {
                 });
             });
         
-        log(`Ze względu na usunięcie roli ${role.name}, usunięto ją z roli reakcji dla grupy ${groupName}`);
+        // log(`Ze względu na usunięcie roli ${role.name}, usunięto ją z roli reakcji dla grupy ${groupName}`);
     },
 };

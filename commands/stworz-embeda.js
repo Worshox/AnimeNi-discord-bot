@@ -10,7 +10,7 @@ module.exports = {
         .setName('kanał')
         .setDescription('Kanał, na który ma zostać wysłana wiadomość')
         .setRequired(true))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const channel = interaction.options.getChannel('kanał');
             
@@ -77,7 +77,7 @@ module.exports = {
                 channel.send({ embeds: [customEmbed] });
                 modalInteraction.reply(`Embeda wysłano na kanał ${channel}!`);
 
-                log(`<stworz-embeda> Użytkownik ${interaction.user.tag} stworzył embeda na kanale ${channel.name}.`);
+                // log(`<stworz-embeda> Użytkownik ${interaction.user.tag} stworzył embeda na kanale ${channel.name}.`);
             }
 
             catch (error) {

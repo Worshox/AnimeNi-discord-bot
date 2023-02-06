@@ -14,7 +14,7 @@ module.exports = {
             .setName('rola')
             .setDescription('Rola, krórą chcesz usunąć z roli reakcji')
             .setRequired(true))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const client = interaction.client;
         const role = interaction.options.getRole('rola');
@@ -71,6 +71,6 @@ module.exports = {
 
         await interaction.reply('Rolę reakcji pomyślnie usunięto!');
 
-        log(`<usun-role-reakcji> Użytkownik ${interaction.user.tag} usunął rolę reakcji ${role.name} z grupy ${groupName}.`);
+        // log(`<usun-role-reakcji> Użytkownik ${interaction.user.tag} usunął rolę reakcji ${role.name} z grupy ${groupName}.`);
     },
 };

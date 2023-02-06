@@ -20,6 +20,6 @@ module.exports = {
         const channel = client.channels.cache.get(byeInfo.channelID);
         channel.send({ embeds: [byeEmbed] });
 
-        log(`Użytkownik ${member.user.tag} opuścił serwer.`);
+        // log(`Użytkownik ${member.user.tag} opuścił serwer.`);
     },
 };

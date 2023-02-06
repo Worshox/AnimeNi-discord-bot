@@ -18,7 +18,7 @@ module.exports = {
             .setName('rola')
             .setDescription('Rola, która ma być przyznawana po zaakceptowaniu regulaminu')
             .setRequired(true))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         if (rulesetInfo.messageID) {
             await interaction.reply(`Regulamin już został stworzony! Możesz go zedytować komendą ${inlineCode('/edytuj-regulamin')}`);
@@ -107,7 +107,7 @@ module.exports = {
 
                 modalInteraction.reply(`Regulamin zapisano i wysłano na kanał ${channel}!`);
 
-                log(`<stworz-regulamin> Użytkownik ${interaction.user.tag} stworzył regulamin serwera i wysłał go na kanał ${channel.name}.`);
+                // log(`<stworz-regulamin> Użytkownik ${interaction.user.tag} stworzył regulamin serwera i wysłał go na kanał ${channel.name}.`);
             }
 
             catch (error) {

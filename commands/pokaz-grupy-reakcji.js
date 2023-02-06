@@ -8,7 +8,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('pokaz-grupy-reakcji')
         .setDescription('Wyświetla listę aktualnie dostępnych grup roli reakcji')
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const client = interaction.client;
 
@@ -36,6 +36,6 @@ module.exports = {
 
         await interaction.reply({ embeds: [reactionRolesEmbed] });
 
-        log(`<pokaz-grupy-reakcji> Użytkownik ${interaction.user.tag} sprawdził grupy reakcji.`);
+        // log(`<pokaz-grupy-reakcji> Użytkownik ${interaction.user.tag} sprawdził grupy reakcji.`);
     },
 };

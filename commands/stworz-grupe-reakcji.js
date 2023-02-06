@@ -18,7 +18,7 @@ module.exports = {
             .setName('kanał')
             .setDescription('Kanał, na którym będzie wiadomość z rolami reakcji')
             .setRequired(true))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const client = interaction.client;
         const groupName = interaction.options.getString('nazwa');
@@ -101,7 +101,7 @@ module.exports = {
 
                 modalInteraction.reply(`Embeda roli reakcji wysłano na kanał ${channel}! Czas dodać do niego role komendą: ${inlineCode('/dodaj-role-reakcji')}.`);
 
-                log(`<stworz-grupe-reakcji> Użytkownik ${interaction.user.tag} stworzył grupę roli reakcji ${groupName}.`);
+                // log(`<stworz-grupe-reakcji> Użytkownik ${interaction.user.tag} stworzył grupę roli reakcji ${groupName}.`);
             }
 
             catch (error) {

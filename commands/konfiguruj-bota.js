@@ -115,6 +115,6 @@ module.exports = {
 
         await interaction.reply('Zapisano ustawienia bota!');
 
-        log(`<konfiguruj-bota> Użytkownik ${interaction.user.tag} zmienił ustawienia statusu bota.`);
+        // log(`<konfiguruj-bota> Użytkownik ${interaction.user.tag} zmienił ustawienia statusu bota.`);
     },
 };

@@ -61,6 +61,6 @@ module.exports = {
 
         await interaction.reply({ embeds: [helpEmbed] });
 
-        log(`<pomoc> Użytkownik ${interaction.user.tag} użył wiadomości pomocy.`);
+        // log(`<pomoc> Użytkownik ${interaction.user.tag} użył wiadomości pomocy.`);
     },
 };

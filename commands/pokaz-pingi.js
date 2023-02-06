@@ -8,7 +8,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('pokaz-pingi')
         .setDescription('Wyświetla listę aktualnie pingowanych ról przy powiadomieniach odcinków')
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const client = interaction.client;
 
@@ -27,6 +27,6 @@ module.exports = {
 
         await interaction.reply({ embeds: [videoPingsEmbed] });
 
-        log(`<pokaz-pingi> Użytkownik ${interaction.user.tag} sprawdził pingi odcinków.`);
+        // log(`<pokaz-pingi> Użytkownik ${interaction.user.tag} sprawdził pingi odcinków.`);
     },
 };

@@ -18,6 +18,6 @@ module.exports = {
         await interaction.guild.members.unban(user);
         await interaction.reply(`${bold('Odbanowano')} użytkownika ${user.username}.`);
 
-        log(`<unban> Użytkownik ${interaction.user.tag} odbanował użytkownika ${user.tag}.`);
+        // log(`<unban> Użytkownik ${interaction.user.tag} odbanował użytkownika ${user.tag}.`);
     },
 };

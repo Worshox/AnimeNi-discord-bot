@@ -13,7 +13,7 @@ module.exports = {
             .setName('rola')
             .setDescription('Rola krórą chcesz usunąć')
             .setRequired(true))
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles),
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const role = interaction.options.getRole('rola');
         
@@ -31,6 +31,6 @@ module.exports = {
 
         await interaction.reply(`Rola ${role} została pomyślnie usunięta z pingów!`);
         
-        log(`<usun-ping> Użytkownik ${interaction.user.tag} usunął rolę ${role.name} z pingów odcinków.`);
+        // log(`<usun-ping> Użytkownik ${interaction.user.tag} usunął rolę ${role.name} z pingów odcinków.`);
     },
 };

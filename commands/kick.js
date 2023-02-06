@@ -14,7 +14,7 @@ module.exports = {
         .addStringOption(option => option
             .setName('powód')
             .setDescription('Dlaczego wyrzucasz tą osobę'))
-        .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const member = interaction.options.getMember('użytkownik');
         const reason = interaction.options.getString('powód') || 'Nie podano przyczyny';
@@ -22,6 +22,6 @@ module.exports = {
         await interaction.reply(`${bold('Wyrzucono')} użytkownika ${member.user.tag} z powodu: ${reason}.`);
         member.kick(reason);
 
-        log(`<kick> Użytkownik ${interaction.user.tag} wyrzucił użytkownika ${member.user.tag} z powodu: ${reason}.`);
+        // log(`<kick> Użytkownik ${interaction.user.tag} wyrzucił użytkownika ${member.user.tag} z powodu: ${reason}.`);
     },
 };

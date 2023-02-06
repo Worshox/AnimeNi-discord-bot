@@ -11,13 +11,13 @@ module.exports = {
             .setName('użytkownik')
             .setDescription('Użytkownik, którego chcesz odciszyć')
             .setRequired(true))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
+        .setDefaultMemberPermissions(PermissionFlagsBits.MuteMembers),
     async execute(interaction) {
         const member = interaction.options.getMember('użytkownik');
 
         member.timeout(1);
         await interaction.reply(`${bold('Odciszono')} użytkownika ${member}.`);
 
-        log(`<unmute> Użytkownik ${interaction.user.tag} odciszył użytkownika ${member.user.tag}.`);
+        // log(`<unmute> Użytkownik ${interaction.user.tag} odciszył użytkownika ${member.user.tag}.`);
     },
 };
