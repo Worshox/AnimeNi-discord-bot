@@ -28,7 +28,7 @@ module.exports = {
         const reactionRolesEmbed = new EmbedBuilder()
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
             .setTitle('Grupy roli reakcji na serwerze:')
-            .setDescription(rolesContent || 'Brak ról reakcji')
+            .setDescription(rolesContent || 'Brak grup ról reakcji')
             .setColor(0x950A0A)
             .setTimestamp()
             .setFooter({ text: 'AnimeNi', iconURL: client.user.displayAvatarURL() });
