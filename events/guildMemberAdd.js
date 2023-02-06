@@ -1,5 +1,6 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const welcomeInfo = require('../config/welcome.json');
+const { userMention } = require('discord.js');
 const { log } = require('../logger');
 
 module.exports = {
@@ -24,7 +25,7 @@ module.exports = {
             .setColor(0x950A0A)
             .setTitle('Witaj w ekipie AnimeNi!')
             .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
-            .setDescription(`${member} ${welcomeInfo.privateMessage}`)
+            .setDescription(`${userMention(member.id)} ${welcomeInfo.privateMessage}`)
             .setImage(welcomeInfo.messageImage)
             .setTimestamp()
             .setFooter({ text: `Jesteś ${member.guild.memberCount}. członkiem serwera`, iconURL: member.avatar });
