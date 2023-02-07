@@ -35,7 +35,14 @@ module.exports = {
         setInterval(findNewVideos, 60_000);
 
         async function findNewVideos() {
-            const response = await axios('https://animeni.pl/wp-json/wp/v2/anime?per_page=10&_embed', { headers: {"Accept-Encoding": "*"} });
+
+            let response
+            try {
+                response = await axios('https://animeni.pl/wp-json/wp/v2/anime?per_page=10&_embed', { headers: {"Accept-Encoding": "*"} });
+            } catch (error) {
+                console.log('Nie udało się pobrać informacji o nowych odcinkach');
+                return;
+            }
 
             let newVideosCount = -1;
 
