@@ -30,8 +30,11 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: `Jesteś ${member.guild.memberCount}. członkiem serwera`, iconURL: member.avatar });
 
-        client.users.send(member.id, { embeds: [welcomePrivateEmbed] });
-
+        try {
+            client.users.send(member.id, { embeds: [welcomePrivateEmbed] });
+        } catch (error) {
+            console.log('Nie można wysłać wiadomości do tego użytkownika');
+        }
         // log(`Użytkownik ${member.user.tag} wszedł na serwer.`);
     },
 };

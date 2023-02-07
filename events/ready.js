@@ -111,7 +111,7 @@ module.exports = {
                     .setFooter({ text: 'AnimeNi', iconURL: client.user.displayAvatarURL() });
     
                 const channel = client.channels.cache.get(videoUpdate.videoChannelID);
-                await channel.send(descripton, { embeds: [videoEmbed] });
+                await channel.send({ content: descripton, embeds: [videoEmbed] });
 
                 log(`Wysłano powiadomienie o nowym odcinku "${videoData.title.rendered}" na kanał ${channel.name}`);
                 
