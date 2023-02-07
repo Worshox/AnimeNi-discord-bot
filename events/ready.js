@@ -1,5 +1,5 @@
 const { Events, ActivityType, EmbedBuilder } = require('discord.js');
-const { roleMention } = require('discord.js');
+const { roleMention, bold } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const axios = require('axios');
@@ -96,7 +96,7 @@ module.exports = {
                     } 
                 }
 
-                const descripton = `Zapraszany do oglądania! ${roleMention(videoPings.odcinki[1])} ${extraRolePingID !== '' ? roleMention(extraRolePingID) : ''}`;
+                const descripton = `${bold('Zapraszany do oglądania!')} ${roleMention(videoPings.odcinki[1])} ${extraRolePingID !== '' ? roleMention(extraRolePingID) : ''}`;
 
                 const videoEmbed = new EmbedBuilder()
                     .setColor(0x950A0A)
@@ -113,7 +113,7 @@ module.exports = {
                 const channel = client.channels.cache.get(videoUpdate.videoChannelID);
                 await channel.send({ content: descripton, embeds: [videoEmbed] });
 
-                log(`Wysłano powiadomienie o nowym odcinku "${videoData.title.rendered}" na kanał ${channel.name}`);
+                // log(`Wysłano powiadomienie o nowym odcinku "${videoData.title.rendered}" na kanał ${channel.name}`);
                 
                 if (!i) {
                     videoUpdate.lastKnownVideoID = videoData.id;
