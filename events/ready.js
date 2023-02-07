@@ -103,7 +103,7 @@ module.exports = {
                     .setTitle(videoData.title.rendered)
                     .setURL(videoData.link)
                     .setAuthor({ name: videoData._embedded.author[0].name, iconURL: videoData._embedded.author[0].avatar_urls["24"], url: videoData._embedded.author[0].link })
-                    .setDescription(descripton)
+                    // .setDescription(descripton)
                     .setThumbnail(videoThumbnailData)
                     .addFields(fields)
                     .setImage(videoImageData)
@@ -111,7 +111,7 @@ module.exports = {
                     .setFooter({ text: 'AnimeNi', iconURL: client.user.displayAvatarURL() });
     
                 const channel = client.channels.cache.get(videoUpdate.videoChannelID);
-                await channel.send({ embeds: [videoEmbed] });
+                await channel.send(descripton, { embeds: [videoEmbed] });
 
                 log(`Wysłano powiadomienie o nowym odcinku "${videoData.title.rendered}" na kanał ${channel.name}`);
                 
