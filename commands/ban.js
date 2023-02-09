@@ -21,12 +21,17 @@ module.exports = {
         const reason = interaction.options.getString('powód') || 'Nie podano przyczyny';
 
         try {
-            client.users.send(user.id, { content: `Zostałeś zbanowany na serwerze AnimeNi z powodu: ${reason}.` });
+            await client.users.send(user.id, { content: `Zostałeś zbanowany na serwerze AnimeNi z powodu: ${reason}.` });
         } catch (error) {
             console.log('Nie można wysłać wiadomości do tego użytkownika');
         }
 
-        await interaction.guild.members.ban(user);
+        try {
+            await interaction.guild.members.ban(user);
+        } catch (error) {
+            await interaction.reply(`Nie można zbanować użytkownika, najprawdopodobniej nie mam odpowiednich uprawnień`);
+            return;
+        }
 
         await interaction.reply(`${bold('Zbanowano')} użytkownika ${user.tag} z powodu: ${reason}.`);
         
