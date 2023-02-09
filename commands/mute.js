@@ -39,17 +39,15 @@ module.exports = {
             case 2419200000: timeInWords = '28 dni'; break;
         }
 
-        try{
-            await member.timeout(time, reason);
-        } catch (error) {
-            await interaction.reply(`Nie można wyciszyć użytkownika, najprawdopodobniej nie mam odpowiednich uprawnień`);
-            return;
-        }
+            member.timeout(time, reason).catch(error => {
+                interaction.reply(`Nie można wyciszyć użytkownika, najprawdopodobniej nie mam odpowiednich uprawnień`);
+                return;
+            });
+        
 
-        try {
-            await client.users.send(member.id, { content: `Zostałeś wyciszony na serwerze AnimeNi z powodu: ${reason}, na ${timeInWords}` });
-        } catch (error) {
-            console.log('Nie można wysłać wiadomości do tego użytkownika');
+        if (!member.user.bot) {
+            client.users.send(member.id, { content: `Zostałeś wyciszony na serwerze AnimeNi z powodu: ${reason}, na ${timeInWords}` })
+                .catch(error => console.log('Nie można wysłać wiadomości do tego użytkownika'));
         }
 
         await interaction.reply(`${bold('Wyciszono')} użytkownika ${member.user.username} z powodu: ${reason}, na ${timeInWords}`);
