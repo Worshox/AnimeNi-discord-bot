@@ -6,7 +6,7 @@ const { log } = require('../logger');
 module.exports = {
     name: Events.GuildMemberAdd,
     once: true,
-    execute(member){
+    async execute(member){
         const client = member.client;
 
         const welcomeChannelEmbed = new EmbedBuilder()
@@ -31,7 +31,7 @@ module.exports = {
             .setFooter({ text: `Jesteś ${member.guild.memberCount}. członkiem serwera`, iconURL: member.avatar });
 
         try {
-            client.users.send(member.id, { embeds: [welcomePrivateEmbed] });
+            await client.users.send(member.id, { embeds: [welcomePrivateEmbed] });
         } catch (error) {
             console.log('Nie można wysłać wiadomości do tego użytkownika');
         }
