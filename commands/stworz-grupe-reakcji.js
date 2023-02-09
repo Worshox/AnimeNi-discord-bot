@@ -99,7 +99,7 @@ module.exports = {
                     if (error) console.log(error);
                 });
 
-                modalInteraction.reply(`Embeda roli reakcji wysłano na kanał ${channel}! Czas dodać do niego role komendą: ${inlineCode('/dodaj-role-reakcji')}.`);
+                await modalInteraction.reply(`Embeda roli reakcji wysłano na kanał ${channel}! Czas dodać do niego role komendą: ${inlineCode('/dodaj-role-reakcji')}.`);
 
                 // log(`<stworz-grupe-reakcji> Użytkownik ${interaction.user.tag} stworzył grupę roli reakcji ${groupName}.`);
             }
