@@ -92,18 +92,18 @@ module.exports = {
                 cooperationInfo.image = cooperationEmbed.data.image ? cooperationEmbed.data.image.url : null;
                 cooperationInfo.footer = cooperationEmbed.data.footer.text;
 
+                await modalInteraction.reply(`Wiadomość współpracy zapisano i wysłano na kanał ${channel}!`);
+
                 const cooperationFile = path.resolve(__dirname, '../config/cooperation.json');
                 fs.writeFile(cooperationFile, JSON.stringify(cooperationInfo), (error) => {
                     if (error) console.log(error);
                 });
 
-                modalInteraction.reply(`Wiadomość zapisano i wysłano na kanał ${channel}!`);
-
                 // log(`<stworz-wspolpraca> Użytkownik ${interaction.user.tag} stworzył wiadomość współpracy serwera i wysłał go na kanał ${channel.name}.`);
             }
 
             catch (error) {
-                console.log(error)
+                console.log(error);
                 modalInteraction.reply('Nie udało się stworzyć wiadomości, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia), lub wystąpił błąd aplikacji.');
             }
         });

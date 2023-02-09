@@ -79,7 +79,7 @@ module.exports = {
                     .setFooter({ text: modalInteraction.fields.getTextInputValue('editCooperationFooterInput') || 'AnimeNi', iconURL: client.user.displayAvatarURL()})
 
                 channel.messages.fetch(cooperationInfo.messageID)
-                    .then(message => {
+                    .then(async message => {
                         message.edit({ embeds: [editedcooperationEmbed] });
                         cooperationInfo.title = editedcooperationEmbed.data.title;
                         cooperationInfo.content = editedcooperationEmbed.data.description;
@@ -87,17 +87,18 @@ module.exports = {
                         cooperationInfo.image = editedcooperationEmbed.data.image ? editedcooperationEmbed.data.image.url : null;
                         cooperationInfo.footer = editedcooperationEmbed.data.footer.text;
         
+                        await modalInteraction.reply(`Wiadomość pomyślnie zedytowano!`);
+
                         const cooperationFile = path.resolve(__dirname, '../config/cooperation.json');
                         fs.writeFile(cooperationFile, JSON.stringify(cooperationInfo), (error) => {
                             if (error) console.log(error);
                         });
                     });
-                modalInteraction.reply(`Wiadomość pomyślnie zedytowano!`);
 
                 // log(`<edytuj-wspolpraca> Użytkownik ${interaction.user.tag} zedytował wiadomość współpracy.`);
             }
             catch (error) {
-                modalInteraction.reply('Nie udało się zedytować wiadomości, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia).');
+                await modalInteraction.reply('Nie udało się zedytować wiadomości, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia).');
             }
         });
     }

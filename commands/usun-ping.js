@@ -24,13 +24,13 @@ module.exports = {
 
         delete videoPings[role.name];
 
+        await interaction.reply(`Rola ${role} została pomyślnie usunięta z pingów!`);
+
         const videoPingsFile = path.resolve(__dirname, '../config/video-pings.json');
         fs.writeFile(videoPingsFile, JSON.stringify(videoPings), (error) => {
             if (error) console.log(error);
         });
 
-        await interaction.reply(`Rola ${role} została pomyślnie usunięta z pingów!`);
-        
         // log(`<usun-ping> Użytkownik ${interaction.user.tag} usunął rolę ${role.name} z pingów odcinków.`);
     },
 };

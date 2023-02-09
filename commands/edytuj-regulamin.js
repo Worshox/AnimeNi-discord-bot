@@ -80,7 +80,7 @@ module.exports = {
                     .setFooter({ text: modalInteraction.fields.getTextInputValue('editRulesetFooterInput') || 'AnimeNi', iconURL: client.user.displayAvatarURL()})
 
                 channel.messages.fetch(rulesetInfo.messageID)
-                    .then(message => {
+                    .then(async message => {
                         message.edit({ embeds: [editedRulesetEmbed] });
                         rulesetInfo.title = editedRulesetEmbed.data.title;
                         rulesetInfo.content = editedRulesetEmbed.data.description;
@@ -88,17 +88,18 @@ module.exports = {
                         rulesetInfo.image = editedRulesetEmbed.data.image ? editedRulesetEmbed.data.image.url : null;
                         rulesetInfo.footer = editedRulesetEmbed.data.footer.text;
         
+                        await modalInteraction.reply(`Regulamin pomyślnie zedytowano!`);
+                        
                         const rulesetFile = path.resolve(__dirname, '../config/ruleset.json');
                         fs.writeFile(rulesetFile, JSON.stringify(rulesetInfo), (error) => {
                             if (error) console.log(error);
                         });
                     });
-                modalInteraction.reply(`Regulamin pomyślnie zedytowano!`);
 
                 // log(`<edytuj-regulamin> Użytkownik ${interaction.user.tag} zedytował regulamin.`);
             }
             catch (error) {
-                modalInteraction.reply('Nie udało się zedytować regulaminu, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia).');
+                await modalInteraction.reply('Nie udało się zedytować regulaminu, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia).');
             }
         });
     }

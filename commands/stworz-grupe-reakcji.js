@@ -96,7 +96,7 @@ module.exports = {
                 
                 await modalInteraction.reply(`Embeda roli reakcji wysłano na kanał ${channel}! Czas dodać do niego role komendą: ${inlineCode('/dodaj-role-reakcji')}.`);
 
-                const reactionRolesFile = path.resolve(__dirname, '../config/reaction-roles.json')
+                const reactionRolesFile = path.resolve(__dirname, '../config/reaction-roles.json');
                 fs.writeFile(reactionRolesFile, JSON.stringify(reactionRoles), (error) => {
                     if (error) console.log(error);
                 });

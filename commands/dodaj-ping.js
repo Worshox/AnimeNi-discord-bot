@@ -29,12 +29,12 @@ module.exports = {
 
         videoPings[role.name] = [slug, role.id];
 
+        await interaction.reply(`Rola ${role} została pomyślnie dodana do pingów odcinków!`);
+
         const videoPingsFile = path.resolve(__dirname, '../config/video-pings.json');
         fs.writeFile(videoPingsFile, JSON.stringify(videoPings), (error) => {
             if (error) console.log(error);
         });
-
-        await interaction.reply(`Rola ${role} została pomyślnie dodana do pingów odcinków!`);
 
         // log(`<dodaj-ping> Użytkownik ${interaction.user.tag} dodał rolę ${role.name} do pingów odcinków.`);
     },

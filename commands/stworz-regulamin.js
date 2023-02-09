@@ -100,19 +100,19 @@ module.exports = {
                 rulesetInfo.image = rulesetEmbed.data.image ? rulesetEmbed.data.image.url : null;
                 rulesetInfo.footer = rulesetEmbed.data.footer.text;
 
+                await modalInteraction.reply(`Regulamin zapisano i wysłano na kanał ${channel}!`);
+                
                 const rulesetFile = path.resolve(__dirname, '../config/ruleset.json');
                 fs.writeFile(rulesetFile, JSON.stringify(rulesetInfo), (error) => {
                     if (error) console.log(error);
                 });
 
-                modalInteraction.reply(`Regulamin zapisano i wysłano na kanał ${channel}!`);
-
                 // log(`<stworz-regulamin> Użytkownik ${interaction.user.tag} stworzył regulamin serwera i wysłał go na kanał ${channel.name}.`);
             }
 
             catch (error) {
-                console.log(error)
-                modalInteraction.reply('Nie udało się stworzyć regulaminu, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia), lub wystąpił błąd aplikacji.');
+                console.log(error);
+                await modalInteraction.reply('Nie udało się stworzyć regulaminu, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia), lub wystąpił błąd aplikacji.');
             }
         });
     }

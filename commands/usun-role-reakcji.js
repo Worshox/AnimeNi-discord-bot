@@ -61,16 +61,17 @@ module.exports = {
         const emoji = reaction.startsWith('<') ? reaction.substring(1, reaction.length-1).split(':')[2] : reaction;     //check if emoji is custom
         const reactionRolesFile = path.resolve(__dirname, '../config/reaction-roles.json');
         channel.messages.fetch(reactionRoles[groupName].messageID)
-            .then(message => {
+            .then(async message => {
                 message.edit({ embeds: [reactionRolesEmbed] });
                 message.reactions.cache.get(emoji).remove();
+
+                await interaction.reply('Rolę reakcji pomyślnie usunięto!');
+
                 fs.writeFile(reactionRolesFile, JSON.stringify(reactionRoles), (error) => {
                     if (error) console.log(error);
                 });
             });
-
-        await interaction.reply('Rolę reakcji pomyślnie usunięto!');
-
+            
         // log(`<usun-role-reakcji> Użytkownik ${interaction.user.tag} usunął rolę reakcji ${role.name} z grupy ${groupName}.`);
     },
 };

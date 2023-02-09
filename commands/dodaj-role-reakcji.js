@@ -74,17 +74,18 @@ module.exports = {
 
         const channel = client.channels.cache.get(reactionRoles[group].channelID);
         channel.messages.fetch(reactionRoles[group].messageID)
-        .then(message => {
+        .then(async message => {
             message.edit({ embeds: [reactionRolesEmbed] });
             message.react(reaction);
+
+            await interaction.reply('Rolę reakcji pomyślnie dodano!');
+
             const reactionRolesFile = path.resolve(__dirname, '../config/reaction-roles.json');
             fs.writeFile(reactionRolesFile, JSON.stringify(reactionRoles), (error) => {
                 if (error) console.log(error);
             });
         });
         
-        await interaction.reply('Rolę reakcji pomyślnie dodano!');
-
         // log(`<dodaj-role-reakcji> Użytkownik ${interaction.user.tag} dodał rolę reakcji ${role.name} do grupy ${group}.`);
     },
 };

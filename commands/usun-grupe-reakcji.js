@@ -26,20 +26,19 @@ module.exports = {
 
         const channel = client.channels.cache.get(reactionRoles[groupName].channelID);
         channel.messages.fetch(reactionRoles[groupName].messageID)
-        .then(message => {
+        .then(async message => {
             message.delete();
 
             delete reactionRoles[groupName];
+
+            await interaction.reply(`Grupę ${inlineCode(groupName)} pomyślnie usunięto!`);
 
             const reactionRolesFile = path.resolve(__dirname, '../config/reaction-roles.json');
             fs.writeFile(reactionRolesFile, JSON.stringify(reactionRoles), (error) => {
                 if (error) console.log(error);
             });
         });
-
-
-        await interaction.reply(`Grupę ${inlineCode(groupName)} pomyślnie usunięto!`);
-
+        
         // log(`<usun-grupe-reakcji> Użytkownik ${interaction.user.tag} usunął grupę reakcji ${groupName}.`);
     },
 };

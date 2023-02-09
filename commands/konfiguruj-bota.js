@@ -108,13 +108,13 @@ module.exports = {
             }
         }
 
+        await interaction.reply('Zapisano ustawienia bota!');
+
         const botConfigurationFile = path.resolve(__dirname, '../config/bot-configuration.json');
         fs.writeFile(botConfigurationFile, JSON.stringify(botConfiguration), (error) => {
             if (error) console.log(error);
         });
-
-        await interaction.reply('Zapisano ustawienia bota!');
-
+        
         // log(`<konfiguruj-bota> Użytkownik ${interaction.user.tag} zmienił ustawienia statusu bota.`);
     },
 };
