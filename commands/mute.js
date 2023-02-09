@@ -26,6 +26,7 @@ module.exports = {
             .setDescription('Dlaczego wyciszasz tego użytkownika'))
         .setDefaultMemberPermissions(PermissionFlagsBits.MuteMembers),
     async execute(interaction) {
+        const client = interaction.client;
         const member = interaction.options.getMember('użytkownik');
         const time = +interaction.options.getString('czas');
         const reason = interaction.options.getString('powód') || 'Nie podano przyczyny';
@@ -39,6 +40,13 @@ module.exports = {
         }
 
         member.timeout(time, reason);
+
+        try {
+            client.users.send(member.id, { content: `Zostałeś wyciszony na serwerze AnimeNi z powodu: ${reason}, na ${timeInWords}` });
+        } catch (error) {
+            console.log('Nie można wysłać wiadomości do tego użytkownika');
+        }
+
         await interaction.reply(`${bold('Wyciszono')} użytkownika ${member.user.username} z powodu: ${reason}, na ${timeInWords}`);
 
         // log(`<mute> Użytkownik ${interaction.user.tag} wyciszył użytkownika ${member.user.tag} z powodu: ${reason}, na ${timeInWords}.`);
