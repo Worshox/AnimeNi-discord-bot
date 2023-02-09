@@ -93,13 +93,13 @@ module.exports = {
                     "image": reactionRoleEmbed.data.image ? reactionRoleEmbed.data.image.url : null,
                     "footer": reactionRoleEmbed.data.footer.text
                 }
+                
+                await modalInteraction.reply(`Embeda roli reakcji wysłano na kanał ${channel}! Czas dodać do niego role komendą: ${inlineCode('/dodaj-role-reakcji')}.`);
 
                 const reactionRolesFile = path.resolve(__dirname, '../config/reaction-roles.json')
                 fs.writeFile(reactionRolesFile, JSON.stringify(reactionRoles), (error) => {
                     if (error) console.log(error);
                 });
-
-                await modalInteraction.reply(`Embeda roli reakcji wysłano na kanał ${channel}! Czas dodać do niego role komendą: ${inlineCode('/dodaj-role-reakcji')}.`);
 
                 // log(`<stworz-grupe-reakcji> Użytkownik ${interaction.user.tag} stworzył grupę roli reakcji ${groupName}.`);
             }
