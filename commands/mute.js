@@ -24,7 +24,7 @@ module.exports = {
         .addStringOption(option => option
             .setName('powód')
             .setDescription('Dlaczego wyciszasz tego użytkownika'))
-        .setDefaultMemberPermissions(PermissionFlagsBits.MuteMembers),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
     async execute(interaction) {
         const client = interaction.client;
         const member = interaction.options.getMember('użytkownik');
