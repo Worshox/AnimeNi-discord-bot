@@ -96,7 +96,7 @@ module.exports = {
                     } 
                 }
 
-                const descripton = `${bold('Zapraszany do oglądania!')} ${roleMention(videoPings.odcinki[1])} ${extraRolePingID !== '' ? roleMention(extraRolePingID) : ''}`;
+                const descripton = `${bold('Zapraszamy do oglądania!')} ${roleMention(videoPings.odcinki[1])} ${extraRolePingID !== '' ? roleMention(extraRolePingID) : ''}`;
 
                 const videoEmbed = new EmbedBuilder()
                     .setColor(0x950A0A)
