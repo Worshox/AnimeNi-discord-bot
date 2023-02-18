@@ -36,7 +36,7 @@ module.exports = {
 
         async function findNewVideos() {
 
-            let response
+            let response;
             try {
                 response = await axios('https://animeni.pl/wp-json/wp/v2/anime?per_page=10&_embed', { headers: {"Accept-Encoding": "*"} });
             } catch (error) {
@@ -47,7 +47,7 @@ module.exports = {
             let newVideosCount = -1;
 
             for (const singleVideo of response.data) {
-                if (singleVideo.id <= videoUpdate.lastKnownVideoID) break;
+                if (singleVideo.slug === videoUpdate.lastKnownVideoSlug) break;
                 
                 newVideosCount++;
             }
@@ -116,7 +116,7 @@ module.exports = {
                 // log(`Wysłano powiadomienie o nowym odcinku "${videoData.title.rendered}" na kanał ${channel.name}`);
                 
                 if (!i) {
-                    videoUpdate.lastKnownVideoID = videoData.id;
+                    videoUpdate.lastKnownVideoSlug = videoData.slug;
                     const vidoeUpdateFile = path.resolve(__dirname, '../config/video-update.json');
                     fs.writeFile(vidoeUpdateFile, JSON.stringify(videoUpdate), (error) => {
                         if (error) console.log(error);
