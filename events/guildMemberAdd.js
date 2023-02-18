@@ -34,6 +34,7 @@ module.exports = {
             await client.users.send(member.id, { embeds: [welcomePrivateEmbed] });
         } catch (error) {
             console.log('Nie można wysłać wiadomości do tego użytkownika');
+            return;
         }
         // log(`Użytkownik ${member.user.tag} wszedł na serwer.`);
     },
