@@ -16,7 +16,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         if (cooperationInfo.messageID) {
-            await interaction.reply(`Wiadomość już została stworzony! Możesz ją zedytować komendą ${inlineCode('/edytuj-wspolpraca')}`);
+            await interaction.reply(`Wiadomość już została stworzona! Możesz ją zedytować komendą ${inlineCode('/edytuj-wspolpraca')}`);
             return;
         }
         
@@ -69,7 +69,7 @@ module.exports = {
             if (!modalInteraction.isModalSubmit()) return;
             
             if (channel.type !== 0){
-                modalInteraction.reply('Zły kanał - możesz podać tylko kanał tekstowy.');
+                await modalInteraction.reply('Zły kanał - możesz podać tylko kanał tekstowy.');
                 return;
             }
 
@@ -103,8 +103,8 @@ module.exports = {
             }
 
             catch (error) {
-                console.log(error);
-                modalInteraction.reply('Nie udało się stworzyć wiadomości, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia), lub wystąpił błąd aplikacji.');
+                await modalInteraction.reply('Nie udało się stworzyć wiadomości, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia), lub wystąpił błąd aplikacji.');
+                return;
             }
         });
     }

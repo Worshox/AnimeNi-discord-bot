@@ -111,8 +111,8 @@ module.exports = {
             }
 
             catch (error) {
-                console.log(error);
                 await modalInteraction.reply('Nie udało się stworzyć regulaminu, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia), lub wystąpił błąd aplikacji.');
+                return;
             }
         });
     }

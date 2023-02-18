@@ -99,6 +99,7 @@ module.exports = {
             }
             catch (error) {
                 await modalInteraction.reply('Nie udało się zedytować wiadomości, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia).');
+                return;
             }
         });
     }
