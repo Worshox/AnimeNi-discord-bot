@@ -28,7 +28,7 @@ module.exports = {
             .setDescription(`${userMention(member.id)} ${welcomeInfo.privateMessage}`)
             .setImage(welcomeInfo.messageImage)
             .setTimestamp()
-            .setFooter({ text: `Jesteś ${member.guild.memberCount}. członkiem serwera`, iconURL: member.user.displayAvatarURL() });
+            .setFooter({ text: `Jesteś ${member.guild.memberCount}. członkiem serwera`, iconURL: member.guild.iconURL });
 
         try {
             await client.users.send(member.id, { embeds: [welcomePrivateEmbed] });
