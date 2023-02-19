@@ -16,7 +16,7 @@ module.exports = {
             .setDescription(`${member} ${welcomeInfo.channelMessage}`)
             .setImage(welcomeInfo.messageImage)
             .setTimestamp()
-            .setFooter({ text: `Jesteś ${member.guild.memberCount}. członkiem serwera`, iconURL: member.avatar });
+            .setFooter({ text: `Jesteś ${member.guild.memberCount}. członkiem serwera`, iconURL: member.user.displayAvatarURL() });
 
         const channel = client.channels.cache.get(welcomeInfo.channelID);
         channel.send({ embeds: [welcomeChannelEmbed] });

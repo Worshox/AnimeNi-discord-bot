@@ -15,7 +15,7 @@ module.exports = {
             .setDescription(`${member} ${byeInfo.message}`)
             .setImage(byeInfo.messageImage)
             .setTimestamp()
-            .setFooter({ text: `Teraz jest ${member.guild.memberCount} członków na serwerze`, iconURL: member.user.displayAvatarURL() });
+            .setFooter({ text: `Teraz jest ${member.guild.memberCount} osób na serwerze` });
 
         const channel = client.channels.cache.get(byeInfo.channelID);
         channel.send({ embeds: [byeEmbed] });
