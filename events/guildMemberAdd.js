@@ -13,13 +13,13 @@ module.exports = {
             .setColor(0x950A0A)
             .setTitle('Witaj w ekipie AnimeNi!')
             .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
-            .setDescription(`${member} ${welcomeInfo.channelMessage}`)
+            .setDescription(welcomeInfo.channelMessage)
             .setImage(welcomeInfo.messageImage)
             .setTimestamp()
             .setFooter({ text: `Jesteś ${member.guild.memberCount}. członkiem serwera`, iconURL: member.user.displayAvatarURL() });
 
         const channel = client.channels.cache.get(welcomeInfo.channelID);
-        channel.send({ embeds: [welcomeChannelEmbed] });
+        channel.send({ content: `Witaj ${member}!`, embeds: [welcomeChannelEmbed] });
 
         const welcomePrivateEmbed = new EmbedBuilder()
             .setColor(0x950A0A)
