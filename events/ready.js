@@ -59,7 +59,7 @@ module.exports = {
                 const videoImageData = `https://animeni.pl/?attachment_id=${videoData.acf['Zdjęcie w tle']}`;
                 
                 if (videoData.acf.tlumaczy_grupa.includes('<a')) {
-                    videoData.acf.tlumaczy_grupa = videoData.acf.tlumaczy_grupa.split('>')[1].slice(0, -4);     //Extract data from link
+                    videoData.acf.tlumaczy_grupa = videoData.acf.tlumaczy_grupa.split('>')[1].slice(0, -3);     //Extract data from link
                 }
     
                 const fields = [
