@@ -1,6 +1,6 @@
 {
   "name": "animeni-discord-bot",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Administrative and notification bot for AnimeNi discord server",
   "main": "index.js",
   "scripts": {
