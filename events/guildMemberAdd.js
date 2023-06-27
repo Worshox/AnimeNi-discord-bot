@@ -7,35 +7,36 @@ module.exports = {
     name: Events.GuildMemberAdd,
     once: true,
     async execute(member){
-        const client = member.client;
+        // const client = member.client;
 
-        const welcomeChannelEmbed = new EmbedBuilder()
-            .setColor(0x950A0A)
-            .setTitle('Witaj w ekipie AnimeNi!')
-            .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
-            .setDescription(welcomeInfo.channelMessage)
-            .setImage(welcomeInfo.messageImage)
-            .setTimestamp()
-            .setFooter({ text: `Jesteś ${member.guild.memberCount}. członkiem serwera`, iconURL: member.user.displayAvatarURL() });
+        // const welcomeChannelEmbed = new EmbedBuilder()
+           //  .setColor(0x950A0A)
+           //  .setTitle('Witaj w ekipie AnimeNi!')
+           //  .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
+           //  .setDescription(welcomeInfo.channelMessage)
+           //  .setImage(welcomeInfo.messageImage)
+           //  .setTimestamp()
+           //  .setFooter({ text: `Jesteś ${member.guild.memberCount}. członkiem serwera`, iconURL: member.user.displayAvatarURL() });
 
-        const channel = client.channels.cache.get(welcomeInfo.channelID);
-        channel.send({ content: `Witaj ${member}!`, embeds: [welcomeChannelEmbed] });
+        // const channel = client.channels.cache.get(welcomeInfo.channelID);
+        // channel.send({ content: `Witaj ${member}!`, embeds: [welcomeChannelEmbed] });
 
-        const welcomePrivateEmbed = new EmbedBuilder()
-            .setColor(0x950A0A)
-            .setTitle('Witaj w ekipie AnimeNi!')
-            .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
-            .setDescription(`${userMention(member.id)} ${welcomeInfo.privateMessage}`)
-            .setImage(welcomeInfo.messageImage)
-            .setTimestamp()
-            .setFooter({ text: `Jesteś ${member.guild.memberCount}. członkiem serwera`, iconURL: member.guild.iconURL() });
+        // const welcomePrivateEmbed = new EmbedBuilder()
+           //  .setColor(0x950A0A)
+           //  .setTitle('Witaj w ekipie AnimeNi!')
+           //  .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
+           //  .setDescription(`${userMention(member.id)} ${welcomeInfo.privateMessage}`)
+           //  .setImage(welcomeInfo.messageImage)
+           //  .setTimestamp()
+           //  .setFooter({ text: `Jesteś ${member.guild.memberCount}. członkiem serwera`, iconURL: member.guild.iconURL() });
 
-        try {
-            await client.users.send(member.id, { embeds: [welcomePrivateEmbed] });
-        } catch (error) {
-            console.log('Nie można wysłać wiadomości do tego użytkownika');
-            return;
-        }
+        // try {
+           //  await client.users.send(member.id, { embeds: [welcomePrivateEmbed] });
+        // } catch (error) {
+           //  console.log('Nie można wysłać wiadomości do tego użytkownika');
+           //  return;
+        // }
         // log(`Użytkownik ${member.user.tag} wszedł na serwer.`);
+        return;
     },
 };

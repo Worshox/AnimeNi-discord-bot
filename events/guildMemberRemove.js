@@ -8,7 +8,7 @@ module.exports = {
     execute(member){
         const client = member.client;
 
-        const byeEmbed = new EmbedBuilder()
+         const byeEmbed = new EmbedBuilder()
             .setColor(0x950A0A)
             .setTitle('Szkoda, że nas opuszczasz :(')
             .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
@@ -18,7 +18,7 @@ module.exports = {
             .setFooter({ text: `Teraz jest ${member.guild.memberCount} osób na serwerze`, iconURL: member.guild.iconURL() });
 
         const channel = client.channels.cache.get(byeInfo.channelID);
-        channel.send({ embeds: [byeEmbed] });
+        // channel.send({ embeds: [byeEmbed] });
 
         // log(`Użytkownik ${member.user.tag} opuścił serwer.`);
     },

@@ -32,7 +32,7 @@ module.exports = {
         log(`Bot uruchomiony! Zalogowano jako ${client.user.tag}, ${botConfiguration.botActivity} ${botConfiguration.botActivityDetails}`);
 
         // DON'T TOUCH THE CODE BELOW UNDER ANY CIRCUMSTANCES! WORKS = DON'T TOUCH!
-        setInterval(findNewVideos, 60_000);
+        // setInterval(findNewVideos, 60_000);
 
         async function findNewVideos() {
 
@@ -68,7 +68,7 @@ module.exports = {
                         value: 
                         `Grupa: ${videoData.acf.tlumaczy_grupa || 'Brak informacji'}
                         Tłumaczenie: ${videoData.acf.tlumaczenie || 'Brak informacji'}
-                        Korekta: ${videoData.acf.korekta ? (videoData.acf.korekta.includes('&amp;') ? '&' : videoData.acf.korekta) : 'Brak informacji'}
+                        Korekta: ${videoData.acf.korekta ? videoData.acf.korekta.replace('&amp;', '&') : 'Brak informacji'}
                         Typesetting: ${videoData.acf.typesetting || 'Brak informacji'}`,
                     },
                     {
