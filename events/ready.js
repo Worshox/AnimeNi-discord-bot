@@ -30,10 +30,10 @@ module.exports = {
 
         console.log(`Bot works! Logged as ${client.user.tag}, he is ${botConfiguration.botActivity} ${botConfiguration.botActivityDetails}`);
 
-        log(`Bot uruchomiony! Zalogowano jako ${client.user.tag}, ${botConfiguration.botActivity} ${botConfiguration.botActivityDetails}`);
+        // log(`Bot uruchomiony! Zalogowano jako ${client.user.tag}, ${botConfiguration.botActivity} ${botConfiguration.botActivityDetails}`);
 
         // DON'T TOUCH THE CODE BELOW UNDER ANY CIRCUMSTANCES! WORKS = DON'T TOUCH!
-        setInterval(findNewVideos, 10_000);
+        setInterval(findNewVideos, 60_000);
 
         async function findNewVideos() {
 
@@ -98,12 +98,16 @@ module.exports = {
                 ];
 
                 let extraRolePingID = '';
-                // const videoName = videoData.link.split('/')[4];     //Extract video name from link
-                // for (const videoPing in videoPings) {
-                //     if (videoName.includes(videoPings[videoPing][0])) {
-                //         extraRolePingID = videoPings[videoPing][1];
-                //     } 
-                // }
+                let channelID = videoUpdate.videoChannelID1;
+                const videoName = videoData.link.split('/')[3];     //Extract video name from link
+                for (const videoPing in videoPings) {
+                    if (videoName.includes(videoPings[videoPing][0])) {
+                        extraRolePingID = videoPings[videoPing][1];
+                        if (videoPings[videoPing][2] !== undefined && videoPings[videoPing][2] !== 1) {
+                            channelID = videoUpdate.videoChannelID2;
+                        }
+                    } 
+                }
 
                 const descripton = `${bold('Zapraszamy do oglądania!')} ${roleMention(videoPings.odcinki[1])} ${extraRolePingID !== '' ? roleMention(extraRolePingID) : ''}`;
 
@@ -111,15 +115,15 @@ module.exports = {
                     .setColor(0x950A0A)
                     .setTitle(he.decode(videoData.title.rendered))
                     .setURL(videoData.link)
-                    .setAuthor({ name: videoData._embedded.author[0].name, iconURL: videoData._embedded.author[0].avatar_urls["24"], url: videoData._embedded.author[0].link })
+                    // .setAuthor({ name: videoData._embedded.author[0].name, iconURL: videoData._embedded.author[0].avatar_urls["24"], url: videoData._embedded.author[0].link })
                     // .setDescription(descripton)
                     // .setThumbnail(videoThumbnailData)
                     .addFields(fields)
                     .setImage(videoImageData)
                     .setTimestamp()
                     .setFooter({ text: 'AnimeNi', iconURL: client.user.displayAvatarURL() });
-    
-                const channel = client.channels.cache.get(videoUpdate.videoChannelID);
+
+                const channel = client.channels.cache.get(channelID);
                 await channel.send({ content: descripton, embeds: [videoEmbed] });
 
                 // log(`Wysłano powiadomienie o nowym odcinku "${videoData.title.rendered}" na kanał ${channel.name}`);
