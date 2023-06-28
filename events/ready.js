@@ -3,6 +3,7 @@ const { roleMention, bold } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const axios = require('axios');
+const he = require('he');
 const botConfiguration = require('../config/bot-configuration.json');
 const videoPings = require('../config/video-pings.json');
 const videoUpdate = require('../config/video-update.json');
@@ -32,13 +33,14 @@ module.exports = {
         log(`Bot uruchomiony! Zalogowano jako ${client.user.tag}, ${botConfiguration.botActivity} ${botConfiguration.botActivityDetails}`);
 
         // DON'T TOUCH THE CODE BELOW UNDER ANY CIRCUMSTANCES! WORKS = DON'T TOUCH!
-        // setInterval(findNewVideos, 60_000);
+        setInterval(findNewVideos, 10_000);
 
         async function findNewVideos() {
 
             let response;
             try {
-                response = await axios('https://animeni.pl/wp-json/wp/v2/anime?per_page=10&_embed', { headers: {"Accept-Encoding": "*"} });
+                // response = await axios('https://animeni.pl/wp-json/wp/v2/anime?per_page=10&_embed', { headers: {"Accept-Encoding": "*"} });
+                response = await axios('https://animeni.pl/wp-json/wp/v2/posts?per_page=10&_embed', { headers: {"Accept-Encoding": "*"} });
             } catch (error) {
                 console.log('Nie udało się pobrać informacji o nowych odcinkach');
                 return;
@@ -55,56 +57,63 @@ module.exports = {
             for (let i = newVideosCount; i >= 0; i--) {
                 const videoData = response.data[i];
                 
-                const videoThumbnailData = `https://animeni.pl/?attachment_id=${videoData.acf.okladka_filmu}`;
-                const videoImageData = `https://animeni.pl/?attachment_id=${videoData.acf['Zdjęcie w tle']}`;
-                
-                if (videoData.acf.tlumaczy_grupa.includes('<a')) {
-                    videoData.acf.tlumaczy_grupa = videoData.acf.tlumaczy_grupa.split('>')[1].slice(0, -3);     //Extract data from link
+                // const videoThumbnailData = `https://animeni.pl/?attachment_id=${videoData.acf.okladka_filmu}`;
+                let videoImageData = 'https://animeni.pl/';
+                if (videoData.featured_image_data !== null) {
+                    videoImageData = videoData.featured_image_data.src;
                 }
-    
+                
+                // if (videoData.acf.tlumaczy_grupa.includes('<a')) {
+                //     videoData.acf.tlumaczy_grupa = videoData.acf.tlumaczy_grupa.split('>')[1].slice(0, -3);     //Extract data from link
+                // }
+
                 const fields = [
                     {
-                        name: 'Informacje o tłumaczeniu:',
-                        value: 
-                        `Grupa: ${videoData.acf.tlumaczy_grupa || 'Brak informacji'}
-                        Tłumaczenie: ${videoData.acf.tlumaczenie || 'Brak informacji'}
-                        Korekta: ${videoData.acf.korekta ? videoData.acf.korekta.replace('&amp;', '&') : 'Brak informacji'}
-                        Typesetting: ${videoData.acf.typesetting || 'Brak informacji'}`,
+                        name: 'Informacje:',
+                        value: videoData.content.rendered.replace(/<[^>]+>/g, '') || 'Brak szczegółów',
                     },
-                    {
-                        name: 'Sezon:',
-                        value: videoData.acf.sezon ? `${videoData.acf.sezon}` : 'Brak informacji',
-                        inline: true,
-                    },
-                    {
-                        name: 'Nr odcinka:',
-                        value: videoData.acf.wpisz_numer_odcinka ? `${videoData.acf.wpisz_numer_odcinka}` : 'Brak informacji',
-                        inline: true,
-                    },
-                    {
-                        name: 'Długość:',
-                        value: videoData.acf.czas_trwania ? `${videoData.acf.czas_trwania} min` : 'Brak informacji',
-                        inline: true,
-                    },
+                    // {
+                    //     name: 'Informacje o tłumaczeniu:',
+                    //     value: 
+                    //     `Grupa: ${videoData.acf.tlumaczy_grupa || 'Brak informacji'}
+                    //     Tłumaczenie: ${videoData.acf.tlumaczenie || 'Brak informacji'}
+                    //     Korekta: ${videoData.acf.korekta ? videoData.acf.korekta.replace('&amp;', '&') : 'Brak informacji'}
+                    //     Typesetting: ${videoData.acf.typesetting || 'Brak informacji'}`,
+                    // },
+                    // {
+                    //     name: 'Sezon:',
+                    //     value: videoData.acf.sezon ? `${videoData.acf.sezon}` : 'Brak informacji',
+                    //     inline: true,
+                    // },
+                    // {
+                    //     name: 'Nr odcinka:',
+                    //     value: videoData.acf.wpisz_numer_odcinka ? `${videoData.acf.wpisz_numer_odcinka}` : 'Brak informacji',
+                    //     inline: true,
+                    // },
+                    // {
+                    //     name: 'Długość:',
+                    //     value: videoData.acf.czas_trwania ? `${videoData.acf.czas_trwania} min` : 'Brak informacji',
+                    //     inline: true,
+                    // },
                 ];
 
                 let extraRolePingID = '';
-                const videoName = videoData.link.split('/')[4];     //Extract video name from link
-                for (const videoPing in videoPings) {
-                    if (videoName.includes(videoPings[videoPing][0])) {
-                        extraRolePingID = videoPings[videoPing][1];
-                    } 
-                }
+                // const videoName = videoData.link.split('/')[4];     //Extract video name from link
+                // for (const videoPing in videoPings) {
+                //     if (videoName.includes(videoPings[videoPing][0])) {
+                //         extraRolePingID = videoPings[videoPing][1];
+                //     } 
+                // }
 
                 const descripton = `${bold('Zapraszamy do oglądania!')} ${roleMention(videoPings.odcinki[1])} ${extraRolePingID !== '' ? roleMention(extraRolePingID) : ''}`;
 
                 const videoEmbed = new EmbedBuilder()
                     .setColor(0x950A0A)
-                    .setTitle(videoData.title.rendered)
+                    .setTitle(he.decode(videoData.title.rendered))
                     .setURL(videoData.link)
                     .setAuthor({ name: videoData._embedded.author[0].name, iconURL: videoData._embedded.author[0].avatar_urls["24"], url: videoData._embedded.author[0].link })
                     // .setDescription(descripton)
-                    .setThumbnail(videoThumbnailData)
+                    // .setThumbnail(videoThumbnailData)
                     .addFields(fields)
                     .setImage(videoImageData)
                     .setTimestamp()
