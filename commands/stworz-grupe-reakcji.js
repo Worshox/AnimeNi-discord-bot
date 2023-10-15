@@ -78,7 +78,7 @@ module.exports = {
                     .setAuthor({ name: client.user.username, iconURL:client.user.displayAvatarURL()})
                     .setTitle(modalInteraction.fields.getTextInputValue('reactionRoleTitleInput'))
                     .setDescription('Nie dodano jeszcze ról')
-                    .setColor(modalInteraction.fields.getTextInputValue('reactionRoleColourInput') ? `0x${modalInteraction.fields.getTextInputValue('reactionRoleColourInput')}` : 0x950A0A)
+                    .setColor(modalInteraction.fields.getTextInputValue('reactionRoleColourInput') ? `#${modalInteraction.fields.getTextInputValue('reactionRoleColourInput')}` : 0x950A0A)
                     .setImage(modalInteraction.fields.getTextInputValue('reactionRoleImageInput') || null)
                     .setFooter({ text: modalInteraction.fields.getTextInputValue('reactionRoleFooterInput') || 'AnimeNi', iconURL: client.user.displayAvatarURL()})
                     .setTimestamp();

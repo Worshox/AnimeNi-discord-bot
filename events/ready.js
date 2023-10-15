@@ -70,7 +70,7 @@ module.exports = {
                 const fields = [
                     {
                         name: 'Informacje:',
-                        value: videoData.content.rendered.replace(/<[^>]+>/g, '') || 'Brak szczegółów',
+                        value: he.decode(videoData.content.rendered.replace(/<[^>]+>/g, '')) || 'Brak szczegółów',
                     },
                     // {
                     //     name: 'Informacje o tłumaczeniu:',
