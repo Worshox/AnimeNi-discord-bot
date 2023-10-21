@@ -226,7 +226,9 @@ module.exports = {
           .setTitle(he.decode(postData.title.rendered))
           .setURL(postData.link)
           .setDescription(
-            he.decode(postData.content.rendered.replace(/<[^>]+>/g, ""))
+            he
+              .decode(postData.content.rendered.replace(/<[^>]+>/g, ""))
+              .slice(0, 300) + "..."
           )
           .setImage(postImageData)
           .setTimestamp()
