@@ -74,7 +74,7 @@ module.exports = {
                     .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL()})
                     .setTitle(modalInteraction.fields.getTextInputValue('editCooperationTitleInput'))
                     .setDescription(modalInteraction.fields.getTextInputValue('editCooperationContentInput'))
-                    .setColor(modalInteraction.fields.getTextInputValue('editCooperationColourInput') ? `0x${modalInteraction.fields.getTextInputValue('editCooperationColourInput')}` : cooperationInfo.colour)
+                    .setColor(modalInteraction.fields.getTextInputValue('editCooperationColourInput') ? `#${modalInteraction.fields.getTextInputValue('editCooperationColourInput')}` : cooperationInfo.colour)
                     .setImage(modalInteraction.fields.getTextInputValue('editCooperationImageInput') || null)
                     .setFooter({ text: modalInteraction.fields.getTextInputValue('editCooperationFooterInput') || 'AnimeNi', iconURL: client.user.displayAvatarURL()})
 

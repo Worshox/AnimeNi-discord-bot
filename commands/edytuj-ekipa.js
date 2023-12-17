@@ -74,7 +74,7 @@ module.exports = {
                     .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL()})
                     .setTitle(modalInteraction.fields.getTextInputValue('editCrewTitleInput'))
                     .setDescription(modalInteraction.fields.getTextInputValue('editCrewContentInput'))
-                    .setColor(modalInteraction.fields.getTextInputValue('editCrewColourInput') ? `0x${modalInteraction.fields.getTextInputValue('editCrewColourInput')}` : crewInfo.colour)
+                    .setColor(modalInteraction.fields.getTextInputValue('editCrewColourInput') ? `#${modalInteraction.fields.getTextInputValue('editCrewColourInput')}` : crewInfo.colour)
                     .setImage(modalInteraction.fields.getTextInputValue('editCrewImageInput') || null)
                     .setFooter({ text: modalInteraction.fields.getTextInputValue('editCrewFooterInput') || 'AnimeNi', iconURL: client.user.displayAvatarURL()})
 
@@ -99,6 +99,7 @@ module.exports = {
             }
             catch (error) {
                 await modalInteraction.reply('Nie udało się zedytować wiadomości, najprawdopodobniej popełniłeś błąd w polu "Zdjęcie" (podaj dokładny URL do zdjęcia).');
+                console.log(error);
                 return;
             }
         });
