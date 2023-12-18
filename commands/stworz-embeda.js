@@ -69,7 +69,7 @@ module.exports = {
                     .setAuthor({ name: modalInteraction.user.username, iconURL: modalInteraction.user.displayAvatarURL()})
                     .setTitle(modalInteraction.fields.getTextInputValue('createEmbedTitleInput'))
                     .setDescription(modalInteraction.fields.getTextInputValue('createEmbedContentInput'))
-                    .setColor(modalInteraction.fields.getTextInputValue('createEmbedColourInput') ? `0x${modalInteraction.fields.getTextInputValue('createEmbedColourInput')}` : 0x950A0A)
+                    .setColor(modalInteraction.fields.getTextInputValue('createEmbedColourInput') ? `#${modalInteraction.fields.getTextInputValue('createEmbedColourInput')}` : 0x950A0A)
                     .setImage(modalInteraction.fields.getTextInputValue('createEmbedImageInput') || null)
                     .setFooter({ text: modalInteraction.fields.getTextInputValue('createEmbedFooterInput') || 'AnimeNi', iconURL: modalInteraction.user.displayAvatarURL()})
                     .setTimestamp();
