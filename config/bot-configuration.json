@@ -1,1 +1,7 @@
-{"botName":"AnimeNi","botAvatarURL":"https://i.imgur.com/niHvUEW.png","botActivity":"watching","botActivityDetails":"https://animeni.pl/","botStatus":"online"}
+{
+  "botName": "AnimeNi",
+  "botAvatarURL": "https://i.imgur.com/niHvUEW.png",
+  "botActivity": "watching",
+  "botActivityDetails": "https://animeni.pl/",
+  "botStatus": "online"
+}
